@@ -359,8 +359,8 @@ const TREND = {
 /* ─── API ─── */
 async function callClaudeImageJSON(base64, mimeType, prompt) {
   const body = {
-    model: "claude-sonnet-4-20250514", max_tokens: 2000,
-    tools: [{ type: "web_search_20250305", name: "web_search" }],
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 2000,
     messages: [{ role: "user", content: [
       { type: "image", source: { type: "base64", media_type: mimeType, data: base64 } },
       { type: "text", text: prompt }
@@ -371,13 +371,17 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
     body: JSON.stringify({ action: "claude", body }),
   });
   const data = await res.json();
-  const raw = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "{}";
-  return JSON.parse(raw.replace(/```json|```/g, "").trim());
+  const textBlocks = data.content?.filter(b => b.type === "text") || [];
+  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  const clean = jsonMatch ? jsonMatch[0] : "{}";
+  return JSON.parse(clean);
 }
 
 async function callClaudeTextJSON(prompt) {
   const body = {
-    model: "claude-sonnet-4-20250514", max_tokens: 2000,
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 2000,
     tools: [{ type: "web_search_20250305", name: "web_search" }],
     messages: [{ role: "user", content: prompt }],
   };
@@ -386,8 +390,11 @@ async function callClaudeTextJSON(prompt) {
     body: JSON.stringify({ action: "claude", body }),
   });
   const data = await res.json();
-  const raw = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "{}";
-  return JSON.parse(raw.replace(/```json|```/g, "").trim());
+  const textBlocks = data.content?.filter(b => b.type === "text") || [];
+  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  const clean = jsonMatch ? jsonMatch[0] : "{}";
+  return JSON.parse(clean);
 }
 
 async function getExchangeRates() {
