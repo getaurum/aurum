@@ -358,11 +358,31 @@ const TREND = {
 
 /* ─── API ─── */
 async function callClaudeImageJSON(base64, mimeType, prompt) {
+  // Compression : réduire les images lourdes avant envoi
+  const compressBase64 = (b64, mime) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL("image/jpeg", 0.82).split(",")[1]);
+    };
+    img.src = `data:${mime};base64,${b64}`;
+  });
+
+  const compressed = await compressBase64(base64, mimeType);
+
   const body = {
     model: "claude-sonnet-4-20250514",
     max_tokens: 2000,
     messages: [{ role: "user", content: [
-      { type: "image", source: { type: "base64", media_type: mimeType, data: base64 } },
+      { type: "image", source: { type: "base64", media_type: "image/jpeg", data: compressed } },
       { type: "text", text: prompt }
     ]}],
   };
@@ -558,9 +578,24 @@ Return ONLY valid JSON — no markdown. All text values must be in ${langName}:
   "disclaimer": "disclaimer in ${langName}"
 }`;
 
-        setStep(mode === "buy" ? t(lang, "searching") : t(lang, "searching_sell"));
-        const analysis = await callClaudeImageJSON(base64, file.type, mode === "buy" ? buyPrompt : sellPrompt);
-        setResult({ ...analysis, mode });
+setStep(t(lang, "searching"));
+        const visual = await callClaudeImageJSON(base64, file.type, mode === "buy" ? buyPrompt : sellPrompt);
+
+        const house = visual.house || "";
+        const piece = visual.piece || "";
+
+        if (house && piece && house !== "unknown" && piece !== "unknown") {
+          setStep(t(lang, "searching_sell"));
+          const enrichPrompt = mode === "buy"
+            ? `You are AURUM. RESPOND ENTIRELY IN ${langName.toUpperCase()}. Search for current market data on: "${house} ${piece}". Return ONLY valid JSON: { "estimatedMarketRange": "real price range", "estimatedMarketEUR": number, "trend": "rising|stable|falling", "trendNote": "one sentence", "priceContext": "one sentence", "priceSource": "source", "historicalNote": "one sentence citing sources like Knight Frank or auction results", "authDetails": ["check 1", "check 2", "check 3"] }`
+            : `You are AURUM. RESPOND ENTIRELY IN ${langName.toUpperCase()}. Search for current resale market data on: "${house} ${piece}" in condition ${condLabel}. Return ONLY valid JSON: { "currentMarketRange": "real range", "currentMarketEUR": number, "conditionAdjustedRange": "adjusted range", "conditionAdjustedEUR": number, "quickSaleEstimate": "range", "optimalSaleEstimate": "range", "trend": "rising|stable|falling", "trendNote": "one sentence", "bestPeriodToSell": "month or season", "priceSource": "source" }`;
+
+          const enriched = await callClaudeTextJSON(enrichPrompt);
+          setResult({ ...visual, ...enriched, mode });
+        } else {
+          setResult({ ...visual, mode });
+        }
+
         incrementScan();
         setPhase("result");
       } catch { setPhase("error"); }
