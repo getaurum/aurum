@@ -461,7 +461,8 @@ function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const [condition, setCondition] = useState(null);
   const [result, setResult] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [step, setStep] = useState("");
+const [step, setStep] = useState("");
+const [errorMsg, setErrorMsg] = useState("");
   const [scansUsed, setScansUsed] = useState(() => parseInt(localStorage.getItem("aurum_scans_total") || "0"));
   const fileRef = useRef(null);
   const cameraRef = useRef(null);
@@ -641,7 +642,7 @@ Return ONLY valid JSON — no markdown, no preamble:
 
         incrementScan();
         setPhase("result");
-      } catch { setPhase("error"); }
+} catch (err) { setPhase("error"); setErrorMsg(err?.message || JSON.stringify(err) || "Unknown error"); }
     };
     reader.readAsDataURL(file);
   };
@@ -748,7 +749,8 @@ Return ONLY valid JSON — no markdown, no preamble:
   /* ERROR */
   if (phase === "error") return (
     <div style={{ textAlign: "center", padding: 40 }}>
-      <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(239,68,68,0.7)", marginBottom: 20 }}>{t(lang, "error_msg")}</p>
+<p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(239,68,68,0.7)", marginBottom: 12 }}>{t(lang, "error_msg")}</p>
+      <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(239,68,68,0.5)", marginBottom: 20, wordBreak: "break-all", padding: "0 20px" }}>{errorMsg}</p>
       <button onClick={() => { setPhase("idle"); setPreview(null); }} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "10px 24px", color: "rgba(255,255,255,0.92)", fontFamily: "'DM Sans',sans-serif", fontSize: 11, cursor: "pointer" }}>{t(lang, "try_again")}</button>
     </div>
   );
