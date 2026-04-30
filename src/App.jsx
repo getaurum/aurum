@@ -586,9 +586,52 @@ setStep(t(lang, "searching"));
 
         if (house && piece && house !== "unknown" && piece !== "unknown") {
           setStep(t(lang, "searching_sell"));
-          const enrichPrompt = mode === "buy"
-            ? `You are AURUM. RESPOND ENTIRELY IN ${langName.toUpperCase()}. Search for current market data on: "${house} ${piece}". Return ONLY valid JSON: { "estimatedMarketRange": "real price range", "estimatedMarketEUR": number, "trend": "rising|stable|falling", "trendNote": "one sentence", "priceContext": "one sentence", "priceSource": "source", "historicalNote": "one sentence citing sources like Knight Frank or auction results", "authDetails": ["check 1", "check 2", "check 3"] }`
-            : `You are AURUM. RESPOND ENTIRELY IN ${langName.toUpperCase()}. Search for current resale market data on: "${house} ${piece}" in condition ${condLabel}. Return ONLY valid JSON: { "currentMarketRange": "real range", "currentMarketEUR": number, "conditionAdjustedRange": "adjusted range", "conditionAdjustedEUR": number, "quickSaleEstimate": "range", "optimalSaleEstimate": "range", "trend": "rising|stable|falling", "trendNote": "one sentence", "bestPeriodToSell": "month or season", "priceSource": "source" }`;
+const enrichPrompt = mode === "buy"
+  ? `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
+
+Search the web RIGHT NOW for current market data on: "${house} ${piece}".
+
+MANDATORY SOURCES TO SEARCH:
+- Vestiaire Collective: current listed prices and sold prices for this exact model
+- Chrono24 (if watch): current market prices
+- Christie's and Sotheby's: recent auction results
+- Knight Frank Luxury Investment Index: performance data
+- Rebag, The RealReal: current resale prices
+
+Return ONLY valid JSON — no markdown, no preamble:
+{
+  "estimatedMarketRange": "real pre-owned price range based on current listings e.g. €8,500 – €14,000",
+  "estimatedMarketEUR": number,
+  "trend": "rising|stable|falling",
+  "trendNote": "one sentence with specific % or data point",
+  "priceContext": "one sentence comparing to retail price",
+  "priceSource": "list actual sources checked e.g. Vestiaire Collective, Christie's",
+  "historicalNote": "one sentence with specific data e.g. +23% over 3 years per Knight Frank 2024",
+  "authDetails": ["specific authentication point 1", "specific authentication point 2", "specific authentication point 3"]
+}`
+  : `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
+
+Search the web RIGHT NOW for current resale market data on: "${house} ${piece}" in condition: ${condLabel}.
+
+MANDATORY SOURCES TO SEARCH:
+- Vestiaire Collective: current listed and sold prices for this exact model
+- The RealReal, Rebag: current resale prices
+- Christie's, Sotheby's, Artcurial: recent auction results
+- Knight Frank Luxury Investment Index: trend data
+
+Return ONLY valid JSON — no markdown, no preamble:
+{
+  "currentMarketRange": "real range from current listings e.g. €8,500 – €12,000",
+  "currentMarketEUR": number,
+  "conditionAdjustedRange": "range adjusted for declared condition",
+  "conditionAdjustedEUR": number,
+  "quickSaleEstimate": "realistic quick sale range in ${city.currency}",
+  "optimalSaleEstimate": "optimal price range in ${city.currency}",
+  "trend": "rising|stable|falling",
+  "trendNote": "one sentence with specific data point",
+  "bestPeriodToSell": "specific month or season with reason",
+  "priceSource": "list actual sources checked"
+}`;
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
           setResult({ ...visual, ...enriched, mode });
@@ -870,40 +913,50 @@ function ResearchSection({ isOwner, lang }) {
     setPhase("loading"); setResult(null);
     try {
       const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-      const prompt = `You are AURUM. RESPOND ENTIRELY IN ${langName.toUpperCase()}. Search for comprehensive market intelligence on: "${query}"
+`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
 
-Search: auction results (Christie's, Sotheby's, Artcurial), Knight Frank Luxury Investment Index, Bain luxury reports, public price data.
+Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
-LEGAL: Present as observations, not financial advice. Never recommend platforms. Never guarantee values. Cite sources.
+MANDATORY SOURCES TO SEARCH:
+- Vestiaire Collective: current pre-owned listings and recent sold prices
+- Christie's, Sotheby's, Artcurial: auction results from the last 24 months
+- Knight Frank Luxury Investment Index 2024: performance data
+- Bain & Company luxury reports: market trend data
+- Chrono24 (if watch): current market prices
+- The RealReal, Rebag: current resale market data
 
-Return ONLY valid JSON. All text in ${langName}:
+LEGAL: Present as market observations only. Not financial advice. Not professional authentication. Cite all sources used.
+
+Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
 {
   "identified": true,
-  "house": "brand",
+  "house": "brand name",
   "piece": "full model name",
   "category": "Bag|Jewelry|Watch|Clothing|Shoes|Accessory",
-  "overview": "2-3 sentence overview in ${langName}",
-  "currentMarketRange": "current pre-owned range",
-  "newRetailRange": "new retail range if available",
+  "overview": "2-3 sentences with specific market context in ${langName}",
+  "currentMarketRange": "real pre-owned range from current listings e.g. €8,500 – €14,000",
+  "newRetailRange": "current retail price if available",
   "trend": "rising|stable|falling",
-  "trendNote": "one sentence in ${langName}",
-  "historicalPerformance": "2-3 sentences in ${langName}, cite sources",
+  "trendNote": "one sentence with specific % or data point citing source",
+  "historicalPerformance": "2-3 sentences with specific data e.g. +23% over 3 years per Knight Frank 2024, auction results etc.",
   "keyValueFactors": [
-    {"factor": "Material", "impact": "positive|negative|neutral", "note": "which materials command a premium and why"},
-    {"factor": "Colour", "impact": "positive|negative|neutral", "note": "which colours are rare or in demand"},
-    {"factor": "Size", "impact": "positive|negative|neutral", "note": "which sizes hold value best"},
-    {"factor": "Hardware", "impact": "positive|negative|neutral", "note": "gold vs palladium vs brushed — impact on value"},
-    {"factor": "Condition", "impact": "positive|negative|neutral", "note": "how condition affects resale value for this piece"},
-    {"factor": "Market demand", "impact": "positive|negative|neutral", "note": "current buyer demand and market liquidity"},
-    {"factor": "Rarity", "impact": "positive|negative|neutral", "note": "limited editions, discontinued models — impact"},
-    {"factor": "Year & provenance", "impact": "positive|negative|neutral", "note": "does production year or origin affect value"}
+    {"factor": "Material", "impact": "positive|negative|neutral", "note": "specific materials and their price premium e.g. Togo leather +15% vs Epsom"},
+    {"factor": "Colour", "impact": "positive|negative|neutral", "note": "specific colours and rarity e.g. Bleu Électrique commands 30-40% premium"},
+    {"factor": "Size", "impact": "positive|negative|neutral", "note": "which sizes hold value best and why"},
+    {"factor": "Hardware", "impact": "positive|negative|neutral", "note": "specific hardware impact e.g. gold hardware +8-12% vs palladium"},
+    {"factor": "Condition", "impact": "positive|negative|neutral", "note": "specific condition impact with % range"},
+    {"factor": "Market demand", "impact": "positive|negative|neutral", "note": "current buyer demand with specific data"},
+    {"factor": "Rarity", "impact": "positive|negative|neutral", "note": "limited editions or discontinued models — specific impact"},
+    {"factor": "Year & provenance", "impact": "positive|negative|neutral", "note": "production year or origin impact with data"}
   ],
-  "authenticationGuide": [{"element": "what to check in ${langName}", "description": "what to look for in ${langName}"}],
-  "marketContext": "2-3 sentences in ${langName}",
-  "sources": ["source 1", "source 2"],
+  "authenticationGuide": [
+    {"element": "authentication point in ${langName}", "description": "what to look for with specific details in ${langName}"}
+  ],
+  "marketContext": "2-3 sentences with specific market data in ${langName}",
+  "sources": ["actual source 1 consulted", "actual source 2 consulted"],
   "dataDate": "${today}",
-  "disclaimer": "disclaimer in ${langName}, not financial advice, not professional authentication"
-}`;
+  "disclaimer": "short disclaimer in ${langName}"
+}`
       const data = await callClaudeTextJSON(prompt);
       setResult(data);
       setPhase("result");
