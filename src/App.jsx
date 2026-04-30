@@ -357,46 +357,7 @@ const TREND = {
 };
 
 /* ─── API ─── */
-async function callClaudeImageJSON(base64, mimeType, prompt) {
-  // Compression : réduire les images lourdes avant envoi
-  const compressBase64 = (b64, mime) => new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const MAX = 1200;
-      let w = img.width, h = img.height;
-      if (w > MAX || h > MAX) {
-        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-        else { w = Math.round(w * MAX / h); h = MAX; }
-      }
-      const canvas = document.createElement("canvas");
-      canvas.width = w; canvas.height = h;
-      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL("image/jpeg", 0.82).split(",")[1]);
-    };
-    img.src = `data:${mime};base64,${b64}`;
-  });
-
-  const compressed = await compressBase64(base64, mimeType);
-
-  const body = {
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 2000,
-    messages: [{ role: "user", content: [
-      { type: "image", source: { type: "base64", media_type: "image/jpeg", data: compressed } },
-      { type: "text", text: prompt }
-    ]}],
-  };
-  const res = await fetch("/api/aurum", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "claude", body }),
-  });
-  const data = await res.json();
-  const textBlocks = data.content?.filter(b => b.type === "text") || [];
-  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
-  const clean = jsonMatch ? jsonMatch[0] : "{}";
-  return JSON.parse(clean);
-}
+if (!textBlocks.length) throw new Error("NO_TEXT_BLOCKS: types=" + data.content.map(b=>b.type).join(","));
 
 async function callClaudeTextJSON(prompt) {
   const body = {
@@ -581,7 +542,7 @@ Return ONLY valid JSON — no markdown. All text values must be in ${langName}:
 
 setStep(t(lang, "searching"));
         const visual = await callClaudeImageJSON(base64, file.type, mode === "buy" ? buyPrompt : sellPrompt);
-        setErrorMsg(JSON.stringify(visual));
+setErrorMsg("VISUAL: " + JSON.stringify(visual) + " | RAW_KEYS: " + Object.keys(visual).join(","));
 
         const house = visual.house || "";
         const piece = visual.piece || "";
