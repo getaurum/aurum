@@ -357,7 +357,46 @@ const TREND = {
 };
 
 /* ─── API ─── */
-if (!textBlocks.length) throw new Error("NO_TEXT_BLOCKS: types=" + data.content.map(b=>b.type).join(","));
+async function callClaudeImageJSON(base64, mimeType, prompt) {
+  const compressBase64 = (b64, mime) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 1200;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL("image/jpeg", 0.82).split(",")[1]);
+    };
+    img.src = `data:${mime};base64,${b64}`;
+  });
+  const compressed = await compressBase64(base64, mimeType);
+  const body = {
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 2000,
+    messages: [{ role: "user", content: [
+      { type: "image", source: { type: "base64", media_type: "image/jpeg", data: compressed } },
+      { type: "text", text: prompt }
+    ]}],
+  };
+  const res = await fetch("/api/aurum", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "claude", body }),
+  });
+  const data = await res.json();
+  if (data.error) throw new Error("API_ERROR: " + JSON.stringify(data));
+  if (!data.content) throw new Error("NO_CONTENT: " + JSON.stringify(data));
+  const textBlocks = data.content.filter(b => b.type === "text");
+  if (!textBlocks.length) throw new Error("NO_TEXT_BLOCKS: types=" + data.content.map(b=>b.type).join(","));
+  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("NO_JSON_MATCH: raw=" + raw.substring(0, 200));
+  return JSON.parse(jsonMatch[0]);
+}
 
 async function callClaudeTextJSON(prompt) {
   const body = {
