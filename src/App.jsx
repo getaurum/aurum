@@ -398,7 +398,7 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
   return JSON.parse(jsonMatch[0]);
 }
 
-async function callClaudeTextJSON(prompt) {
+async function max_tokens: 1024(prompt) {
   const body = {
     model: "claude-sonnet-4-5",
     max_tokens: 2000,
