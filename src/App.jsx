@@ -402,7 +402,7 @@ async function callClaudeTextJSON(prompt) {
   const body = {
     model: "claude-sonnet-4-5",
 max_tokens: 4000,
-
+tools: [{ type: "web_search_20250305", name: "web_search" }],
     messages: [{ role: "user", content: prompt }],
   };
   const res = await fetch("/api/aurum", {
@@ -917,7 +917,7 @@ const [errorMsg, setErrorMsg] = useState("");
     setPhase("loading"); setResult(null);
     try {
       const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
+const prompt = `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
 
 Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
