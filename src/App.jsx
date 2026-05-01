@@ -411,8 +411,9 @@ tools: [{ type: "web_search_20250305", name: "web_search" }],
   });
   const data = await res.json();
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
-  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+const rawText = textBlocks[textBlocks.length - 1]?.text || "{}";
+const raw = rawText.replace(/<cite[^>]*>|<\/cite>/g, "");
+const jsonMatch = raw.match(/\{[\s\S]*\}/);
 const removeCite = (obj) => {
   if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
   if (Array.isArray(obj)) return obj.map(removeCite);
