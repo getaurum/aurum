@@ -962,7 +962,7 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
   "disclaimer": "short disclaimer in ${langName}"
 }`
 const data = await callClaudeTextJSON(prompt);
-if (!data.historicalPerformance) throw new Error("PARTIAL_JSON: " + JSON.stringify(data).substring(0, 300));
+
 setResult(data);
       setPhase("result");
 } catch (err) { setPhase("error"); setErrorMsg(err?.message || JSON.stringify(err) || "Unknown error"); }
