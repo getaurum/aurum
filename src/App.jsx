@@ -945,7 +945,7 @@ MANDATORY SOURCES TO SEARCH:
 
 LEGAL: Present as market observations only. Not financial advice. Not professional authentication. Cite all sources used.
 
-Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
+Return ONLY the raw JSON object below, starting with { and ending with }. No text before or after. No markdown. No explanation. Just the JSON:
 {
   "identified": true,
   "house": "brand name",
