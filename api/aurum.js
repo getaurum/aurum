@@ -15,7 +15,10 @@ if (action === 'claude') {
         'anthropic-version': '2023-06-01',
         'anthropic-beta': 'web-search-2025-03-05',
       },
-      body: JSON.stringify(body),
+body: JSON.stringify({
+  ...body,
+  system: "NEVER use <cite> tags or any XML/HTML tags. Return only plain text and valid JSON."
+}),
     });
     const data = await response.json();
     const dataStr = JSON.stringify(data);
