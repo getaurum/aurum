@@ -413,8 +413,14 @@ tools: [{ type: "web_search_20250305", name: "web_search" }],
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
   const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
-const clean = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
-  return JSON.parse(clean);
+const removeCite = (obj) => {
+  if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
+  if (Array.isArray(obj)) return obj.map(removeCite);
+  if (obj && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, removeCite(v)]));
+  return obj;
+};
+const clean = jsonMatch ? jsonMatch[0] : "{}";
+return removeCite(JSON.parse(clean));
 }
 
 async function getExchangeRates() {
