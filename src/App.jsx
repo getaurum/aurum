@@ -413,7 +413,7 @@ tools: [{ type: "web_search_20250305", name: "web_search" }],
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
   const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
-  const clean = jsonMatch ? jsonMatch[0] : "{}";
+const clean = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
   return JSON.parse(clean);
 }
 
