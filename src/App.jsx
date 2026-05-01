@@ -411,17 +411,17 @@ tools: [{ type: "web_search_20250305", name: "web_search" }],
   });
   const data = await res.json();
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
-const rawText = textBlocks[textBlocks.length - 1]?.text || "{}";
-const raw = rawText.replace(/<cite[^>]*>|<\/cite>/g, "");
+const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
 const jsonMatch = raw.match(/\{[\s\S]*\}/);
+const cleaned = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
 const removeCite = (obj) => {
   if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
   if (Array.isArray(obj)) return obj.map(removeCite);
   if (obj && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, removeCite(v)]));
   return obj;
 };
-const clean = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
-return removeCite(JSON.parse(clean));
+
+return removeCite(JSON.parse(cleaned));
 }
 
 async function getExchangeRates() {
