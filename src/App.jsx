@@ -581,7 +581,7 @@ Return ONLY valid JSON — no markdown. All text values must be in ${langName}:
 
 setStep(t(lang, "searching"));
         const visual = await callClaudeImageJSON(base64, file.type, mode === "buy" ? buyPrompt : sellPrompt);
-setErrorMsg("VISUAL: " + JSON.stringify(visual) + " | RAW_KEYS: " + Object.keys(visual).join(","));
+
 
         const house = visual.house || "";
         const piece = visual.piece || "";
