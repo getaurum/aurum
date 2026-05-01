@@ -417,7 +417,7 @@ const end = raw.lastIndexOf('}');
 const jsonMatch = start !== -1 && end !== -1 ? [raw.slice(start, end + 1)] : null;
 const cleaned = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
 const removeCite = (obj) => {
-  if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
+  if (typeof obj === "string") return obj.replace(/<cite[^>]*?>[\s\S]*?<\/cite>/g, (m) => m.replace(/<[^>]*>/g, ''));
   if (Array.isArray(obj)) return obj.map(removeCite);
   if (obj && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, removeCite(v)]));
   return obj;
