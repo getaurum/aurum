@@ -924,7 +924,7 @@ const [errorMsg, setErrorMsg] = useState("");
     setPhase("loading"); setResult(null);
     try {
       const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-const prompt = `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
+`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}. CRITICAL: Never use <cite> or any HTML tags in your JSON values.
 
 Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
