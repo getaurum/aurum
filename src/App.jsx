@@ -984,7 +984,7 @@ setErrorMsg("");
 setPhase("result");
 } catch (err) { 
   setPhase("error"); 
-  setErrorMsg(String(err?.message || err || "Unknown")); 
+  setErrorMsg(err?.message || "Erreur de chargement");
 }
   };
 
