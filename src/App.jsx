@@ -419,7 +419,7 @@ const removeCite = (obj) => {
   if (obj && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, removeCite(v)]));
   return obj;
 };
-const clean = jsonMatch ? jsonMatch[0] : "{}";
+const clean = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
 return removeCite(JSON.parse(clean));
 }
 
