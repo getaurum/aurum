@@ -36,9 +36,15 @@ export default async function handler(req, res) {
         }),
       });
       const data = await response.json();
+const cleaned = removeCiteTags(data);
 const jsonStr = JSON.stringify(cleaned)
+  .replace(/\\u003ccite[^>]*>/gi, '')
   .replace(/<cite[^>]*>/gi, '')
-  .replace(/<\/cite>/gi, '');
+  .replace(/\\u003c\/cite>/gi, '')
+  .replace(/<\/cite>/gi, '')
+  .replace(/"([^"]*)<cite[^>]*>([^"]*)<\/cite>([^"]*)"/g, '"$1$2$3"');
+const reprocessed = JSON.parse(jsonStr);
+return res.status(response.status).json(reprocessed);
 const reprocessed = JSON.parse(jsonStr);
 return res.status(response.status).json(reprocessed);
     } catch (error) {
