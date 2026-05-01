@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       const data = await response.json();
 const cleaned = removeCiteTags(data);
 const jsonStr = JSON.stringify(cleaned)
-  .replace(/<cite(?:[^>]|(?:\\"))*>/g, '')
+  .replace(/<cite[^<]*?>/g, '')
   .replace(/<\/cite>/g, '');
 const reprocessed = JSON.parse(jsonStr);
 return res.status(response.status).json(reprocessed);
