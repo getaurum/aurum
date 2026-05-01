@@ -1,3 +1,6 @@
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 function removeCiteTags(obj) {
   if (typeof obj === 'string') {
     return obj
@@ -35,7 +38,11 @@ export default async function handler(req, res) {
           system: "Never use HTML or XML tags in your response including <cite>, <b>, <br>."
         }),
       });
-      const data = await response.json();
+      const rawText = await response.text();
+if (!rawText || !rawText.trim().startsWith('{')) {
+  return res.status(500).json({ error: 'Anthropic error', raw: rawText.substring(0, 300) });
+}
+const data = JSON.parse(rawText);
 const allBlocks = data.content || [];
 const allText = allBlocks
   .map(b => {
