@@ -36,12 +36,24 @@ export default async function handler(req, res) {
         }),
       });
       const data = await response.json();
-const cleaned = removeCiteTags(data);
-const allBlocks = cleaned.content || [];
+const allBlocks = data.content || [];
 const allText = allBlocks
   .map(b => {
     if (b.type === 'text') return b.text || '';
     if (b.type === 'tool_result') return JSON.stringify(b.content || '');
+    return '';
+  })
+  .join(' ');
+const jsonMatch = allText.match(/\{[\s\S]*\}/);
+if (!jsonMatch) {
+  return res.status(500).json({ 
+    error: 'NO_JSON in response', 
+    blockTypes: allBlocks.map(b => b.type),
+    textSample: allText.substring(0, 800)
+  });
+}
+const parsed = JSON.parse(jsonMatch[0]);
+return res.status(200).json(parsed);
     return '';
   })
   .join(' ');
