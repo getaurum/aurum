@@ -1,3 +1,18 @@
+function removeCiteTags(obj) {
+  if (typeof obj === 'string') {
+    return obj
+      .replace(/<cite[^>]*>(.*?)<\/cite>/gs, '$1')
+      .replace(/<cite[^>]*\/>/g, '');
+  }
+  if (Array.isArray(obj)) return obj.map(removeCiteTags);
+  if (obj !== null && typeof obj === 'object') {
+    return Object.fromEntries(
+      Object.entries(obj).map(([k, v]) => [k, removeCiteTags(v)])
+    );
+  }
+  return obj;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -5,30 +20,28 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   const { action, body } = req.body;
-if (action === 'claude') {
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'web-search-2025-03-05',
-      },
-body: JSON.stringify({
-  ...body,
-  system: "NEVER use <cite> tags or any XML/HTML tags. Return only plain text and valid JSON."
-}),
-    });
-    const data = await response.json();
-    const dataStr = JSON.stringify(data);
-    const cleaned = dataStr.replace(/<cite[^>]*>/g, '').replace(/<\/cite>/g, '');
-    return res.status(response.status).json(JSON.parse(cleaned));
-  } catch (error) {
-    return res.status(500).json({ error: 'Anthropic API error' });
+  if (action === 'claude') {
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-beta': 'web-search-2025-03-05',
+        },
+        body: JSON.stringify({
+          ...body,
+          system: "Never use HTML or XML tags in your response including <cite>, <b>, <br>."
+        }),
+      });
+      const data = await response.json();
+      const cleaned = removeCiteTags(data);
+      return res.status(response.status).json(cleaned);
+    } catch (error) {
+      return res.status(500).json({ error: 'Anthropic API error' });
+    }
   }
-}
-
   if (action === 'subscribe') {
     const { email } = req.body;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
