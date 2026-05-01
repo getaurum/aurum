@@ -401,11 +401,11 @@ const raw = allText || "{}";
 
 async function callClaudeTextJSON(prompt) {
   const body = {
-    model: "claude-sonnet-4-5",
-max_tokens: 4000,
-tools: [{ type: "web_search_20250305", name: "web_search" }],
-    messages: [{ role: "user", content: prompt }],
-  };
+  model: "claude-sonnet-4-5",
+  max_tokens: 4000,
+  tools: [{ type: "web_search_20250305", name: "web_search" }],
+  messages: [{ role: "user", content: prompt }],
+};
   const res = await fetch("/api/aurum", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ action: "claude", body }),
