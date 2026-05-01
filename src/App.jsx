@@ -392,7 +392,8 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
   if (!data.content) throw new Error("NO_CONTENT: " + JSON.stringify(data));
   const textBlocks = data.content.filter(b => b.type === "text");
   if (!textBlocks.length) throw new Error("NO_TEXT_BLOCKS: types=" + data.content.map(b=>b.type).join(","));
-  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
+  const allText = textBlocks.map(b => b.text).join(" ");
+const raw = allText || "{}";
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error("NO_JSON_MATCH: raw=" + raw.substring(0, 200));
   return JSON.parse(jsonMatch[0]);
@@ -1042,7 +1043,7 @@ setPhase("result");
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "rgba(200,155,60,0.75)", textTransform: "uppercase", marginBottom: 6 }}>{result.house} · {result.category}</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, color: "rgba(255,255,255,0.9)", marginBottom: 10 }}>{result.piece}</div>
-           {typeof result.overview === 'string' && !result.overview.startsWith('{') && !result.overview.includes('"identified"') ? result.overview : null}
+           {result.overview}
           </div>
 
           <div style={{ background: "rgba(200,155,60,0.04)", border: "1px solid rgba(200,155,60,0.12)", borderRadius: 14, padding: "18px 22px", marginBottom: 12 }}>
