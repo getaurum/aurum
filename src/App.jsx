@@ -425,7 +425,7 @@ const removeCite = (obj) => {
 
 try {
   const parsed = JSON.parse(cleaned);
-return typeof parsed === 'object' ? parsed : JSON.parse(parsed);
+return removeCite(typeof parsed === 'object' ? parsed : JSON.parse(parsed));
 } catch(e) {
   console.error("JSON parse error:", e, "cleaned:", cleaned.substring(0, 200));
   return {};
