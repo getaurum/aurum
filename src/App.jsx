@@ -962,6 +962,7 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
   "disclaimer": "short disclaimer in ${langName}"
 }`
 const data = await callClaudeTextJSON(prompt);
+setErrorMsg(JSON.stringify(data).substring(0, 500));
 setResult(data);
 setPhase("result");
 } catch (err) { 
