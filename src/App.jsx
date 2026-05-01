@@ -401,8 +401,8 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
 async function callClaudeTextJSON(prompt) {
   const body = {
     model: "claude-sonnet-4-5",
-max_tokens: 4000
-    tools: [{ type: "web_search_20250305", name: "web_search" }],
+max_tokens: 4000,
+
     messages: [{ role: "user", content: prompt }],
   };
   const res = await fetch("/api/aurum", {
@@ -962,10 +962,12 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
   "disclaimer": "short disclaimer in ${langName}"
 }`
 const data = await callClaudeTextJSON(prompt);
-
 setResult(data);
-      setPhase("result");
-} catch (err) { setPhase("error"); setErrorMsg(err?.message || JSON.stringify(err) || "Unknown error"); }
+setPhase("result");
+} catch (err) { 
+  setPhase("error"); 
+  setErrorMsg(String(err?.message || err || "Unknown")); 
+}
   };
 
   const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
