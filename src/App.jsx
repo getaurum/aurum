@@ -421,7 +421,12 @@ const removeCite = (obj) => {
   return obj;
 };
 
-return removeCite(JSON.parse(cleaned));
+try {
+  return removeCite(JSON.parse(cleaned));
+} catch(e) {
+  console.error("JSON parse error:", e, "cleaned:", cleaned.substring(0, 200));
+  return {};
+}
 }
 
 async function getExchangeRates() {
