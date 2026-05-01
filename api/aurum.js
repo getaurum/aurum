@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       });
       const data = await response.json();
 const cleaned = removeCiteTags(data);
-const reprocessed = JSON.parse(JSON.stringify(cleaned).replace(/<cite[^>]*>(.*?)<\/cite>/gs, '$1'));
+const reprocessed = JSON.parse(JSON.stringify(cleaned).replace(/<cite[^>]*>[\s\S]*?<\/cite>/g, (m) => m.replace(/<cite[^>]*>/g, '').replace(/<\/cite>/g, '')));
 return res.status(response.status).json(reprocessed);
     } catch (error) {
       return res.status(500).json({ error: 'Anthropic API error' });
