@@ -964,6 +964,7 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
 const data = await callClaudeTextJSON(prompt);
 
 setResult(data);
+setErrorMsg("");
 setPhase("result");
 } catch (err) { 
   setPhase("error"); 
