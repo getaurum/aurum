@@ -45,7 +45,10 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Anthropic error', raw: rawText.substring(0, 300) });
       }
       const data = JSON.parse(rawText);
-      const allBlocks = data.content || [];
+      if (!data.content || data.content.length === 0) {
+  return res.status(500).json({ error: 'Empty content', dataKeys: Object.keys(data), dataStr: JSON.stringify(data).substring(0, 1000) });
+}
+const allBlocks = data.content || [];
       const allText = allBlocks
         .map(b => {
           if (b.type === 'text') return b.text || '';
