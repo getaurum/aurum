@@ -37,11 +37,18 @@ export default async function handler(req, res) {
       });
       const data = await response.json();
 const cleaned = removeCiteTags(data);
-const textBlocks = cleaned.content?.filter(b => b.type === 'text') || [];
-const allText = textBlocks.map(b => b.text).join(' ');
+const allBlocks = cleaned.content || [];
+const allText = allBlocks
+  .map(b => {
+    if (b.type === 'text') return b.text || '';
+    if (b.type === 'tool_result') return JSON.stringify(b.content || '');
+    return '';
+  })
+  .join(' ');
 const jsonMatch = allText.match(/\{[\s\S]*\}/);
-if (!jsonMatch) return res.status(500).json({ error: 'NO_JSON in response' });
+if (!jsonMatch) return res.status(500).json({ error: 'NO_JSON in response', debug: allText.substring(0, 500) });
 const parsed = JSON.parse(jsonMatch[0]);
+return res.status(200).json(parsed);
 return res.status(200).json(parsed);
     } catch (error) {
       return res.status(500).json({ error: 'Anthropic API error' });
