@@ -25,11 +25,7 @@ if (action === 'claude') {
     return res.status(500).json({ error: 'Anthropic API error' });
   }
 }
-return res.status(response.status).json(data);
-    } catch (error) {
-      return res.status(500).json({ error: 'Anthropic API error' });
-    }
-  }
+
   if (action === 'subscribe') {
     const { email } = req.body;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
