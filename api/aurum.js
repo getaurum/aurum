@@ -1,5 +1,4 @@
 export const maxDuration = 60;
-export const dynamic = 'force-dynamic';
 
 function removeCiteTags(obj) {
   if (typeof obj === 'string') {
@@ -22,7 +21,9 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
   const { action, body } = req.body;
+
   if (action === 'claude') {
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -35,44 +36,39 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           ...body,
-          system: "Never use HTML or XML tags in your response including <cite>, <b>, <br>."
+          system: "Never use HTML or XML tags in your response including <cite>, <b>, <br>.",
         }),
       });
+
       const rawText = await response.text();
-if (!rawText || !rawText.trim().startsWith('{')) {
-  return res.status(500).json({ error: 'Anthropic error', raw: rawText.substring(0, 300) });
-}
-const data = JSON.parse(rawText);
-const allBlocks = data.content || [];
-const allText = allBlocks
-  .map(b => {
-    if (b.type === 'text') return b.text || '';
-    if (b.type === 'tool_result') return JSON.stringify(b.content || '');
-    return '';
-  })
-  .join(' ');
-const jsonMatch = allText.match(/\{[\s\S]*\}/);
-if (!jsonMatch) {
-  return res.status(500).json({ 
-    error: 'NO_JSON in response', 
-    blockTypes: allBlocks.map(b => b.type),
-    textSample: allText.substring(0, 800)
-  });
-}
-const parsed = JSON.parse(jsonMatch[0]);
-return res.status(200).json(parsed);
-    return '';
-  })
-  .join(' ');
-const jsonMatch = allText.match(/\{[\s\S]*\}/);
-if (!jsonMatch) return res.status(500).json({ error: 'NO_JSON in response', debug: allText.substring(0, 500) });
-const parsed = JSON.parse(jsonMatch[0]);
-return res.status(200).json(parsed);
-return res.status(200).json(parsed);
+      if (!rawText || !rawText.trim().startsWith('{')) {
+        return res.status(500).json({ error: 'Anthropic error', raw: rawText.substring(0, 300) });
+      }
+      const data = JSON.parse(rawText);
+      const allBlocks = data.content || [];
+      const allText = allBlocks
+        .map(b => {
+          if (b.type === 'text') return b.text || '';
+          if (b.type === 'tool_result') return JSON.stringify(b.content || '');
+          return '';
+        })
+        .join(' ');
+      const jsonMatch = allText.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        return res.status(500).json({
+          error: 'NO_JSON in response',
+          blockTypes: allBlocks.map(b => b.type),
+          textSample: allText.substring(0, 800)
+        });
+      }
+      const parsed = JSON.parse(jsonMatch[0]);
+      const cleaned = removeCiteTags(parsed);
+      return res.status(200).json(cleaned);
     } catch (error) {
-      return res.status(500).json({ error: 'Anthropic API error' });
+      return res.status(500).json({ error: 'Anthropic API error', detail: error.message });
     }
   }
+
   if (action === 'subscribe') {
     const { email } = req.body;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
@@ -90,5 +86,6 @@ return res.status(200).json(parsed);
       return res.status(500).json({ error: 'Brevo API error' });
     }
   }
+
   return res.status(400).json({ error: 'Unknown action' });
 }
