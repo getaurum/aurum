@@ -1042,7 +1042,7 @@ setPhase("result");
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "rgba(200,155,60,0.75)", textTransform: "uppercase", marginBottom: 6 }}>{result.house} · {result.category}</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, color: "rgba(255,255,255,0.9)", marginBottom: 10 }}>{result.piece}</div>
-           {typeof result.overview === 'string' && result.overview.startsWith('{') ? '' : result.overview}
+           {typeof result.overview === 'string' && !result.overview.startsWith('{') && !result.overview.includes('"identified"') ? result.overview : null}
           </div>
 
           <div style={{ background: "rgba(200,155,60,0.04)", border: "1px solid rgba(200,155,60,0.12)", borderRadius: 14, padding: "18px 22px", marginBottom: 12 }}>
