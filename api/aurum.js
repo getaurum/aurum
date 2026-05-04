@@ -17,16 +17,8 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify(body),
       });
-const data = await response.json();
-if (data.content) {
-  data.content = data.content.map(block => {
-    if (block.type === 'text' && block.text) {
-      block.text = block.text.replace(/<cite[^>]*>|<\/cite>/g, '');
-    }
-    return block;
-  });
-}
-return res.status(response.status).json(data);
+      const data = await response.json();
+      return res.status(response.status).json(data);
     } catch (error) {
       return res.status(500).json({ error: 'Anthropic API error' });
     }
