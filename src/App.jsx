@@ -924,7 +924,7 @@ const [errorMsg, setErrorMsg] = useState("");
     setPhase("loading"); setResult(null);
     try {
       const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-const prompt = `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}. CRITICAL: Never use <cite> or any HTML tags in your JSON values.
+`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}. CRITICAL: Never use <cite> or any HTML tags in your JSON values.
 
 Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
@@ -1033,7 +1033,7 @@ setPhase("result");
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "rgba(200,155,60,0.75)", textTransform: "uppercase", marginBottom: 6 }}>{result.house} · {result.category}</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, color: "rgba(255,255,255,0.9)", marginBottom: 10 }}>{result.piece}</div>
-           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.92)", lineHeight: 1.65, margin: 0 }}>{result.overview}</p>
+           <p style={{ fontFamily: "'DM Sans',sans-serif", <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.92)", lineHeight: 1.65, margin: 0 }}>{result.overview}</p>
           </div>
 
           <div style={{ background: "rgba(200,155,60,0.04)", border: "1px solid rgba(200,155,60,0.12)", borderRadius: 14, padding: "18px 22px", marginBottom: 12 }}>
