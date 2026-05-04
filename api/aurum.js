@@ -1,29 +1,10 @@
-export const maxDuration = 60;
-
-function removeCiteTags(obj) {
-  if (typeof obj === 'string') {
-    return obj
-      .replace(/<cite[^>]*>(.*?)<\/cite>/gs, '$1')
-      .replace(/<cite[^>]*\/>/g, '');
-  }
-  if (Array.isArray(obj)) return obj.map(removeCiteTags);
-  if (obj !== null && typeof obj === 'object') {
-    return Object.fromEntries(
-      Object.entries(obj).map(([k, v]) => [k, removeCiteTags(v)])
-    );
-  }
-  return obj;
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
   const { action, body } = req.body;
-
   if (action === 'claude') {
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -34,44 +15,22 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01',
           'anthropic-beta': 'web-search-2025-03-05',
         },
-        body: JSON.stringify({
-          ...body,
-          system: "Never use HTML or XML tags in your response including <cite>, <b>, <br>.",
-        }),
+        body: JSON.stringify(body),
       });
-
-      const rawText = await response.text();
-      if (!rawText || !rawText.trim().startsWith('{')) {
-        return res.status(500).json({ error: 'Anthropic error', raw: rawText.substring(0, 300) });
-      }
-      const data = JSON.parse(rawText);
-      if (!data.content || data.content.length === 0) {
-  return res.status(500).json({ error: 'Empty content', dataKeys: Object.keys(data), dataStr: JSON.stringify(data).substring(0, 1000) });
+const data = await response.json();
+if (data.content) {
+  data.content = data.content.map(block => {
+    if (block.type === 'text' && block.text) {
+      block.text = block.text.replace(/<cite[^>]*>|<\/cite>/g, '');
+    }
+    return block;
+  });
 }
-const allBlocks = data.content || [];
-      const allText = allBlocks
-        .map(b => {
-          if (b.type === 'text') return b.text || '';
-          if (b.type === 'tool_result') return JSON.stringify(b.content || '');
-          return '';
-        })
-        .join(' ');
-      const jsonMatch = allText.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        return res.status(500).json({
-          error: 'NO_JSON in response',
-          blockTypes: allBlocks.map(b => b.type),
-          textSample: allText.substring(0, 800)
-        });
-      }
-      const parsed = JSON.parse(jsonMatch[0]);
-      const cleaned = removeCiteTags(parsed);
-      return res.status(200).json(cleaned);
+return res.status(response.status).json(data);
     } catch (error) {
-      return res.status(500).json({ error: 'Anthropic API error', detail: error.message });
+      return res.status(500).json({ error: 'Anthropic API error' });
     }
   }
-
   if (action === 'subscribe') {
     const { email } = req.body;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
@@ -89,6 +48,5 @@ const allBlocks = data.content || [];
       return res.status(500).json({ error: 'Brevo API error' });
     }
   }
-
   return res.status(400).json({ error: 'Unknown action' });
 }
