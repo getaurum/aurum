@@ -411,10 +411,8 @@ tools: [{ type: "web_search_20250305", name: "web_search" }],
   });
   const data = await res.json();
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
-const raw = (textBlocks.map(b => b.text).join("") || "{}").replace(/<cite[^>]*>|<\/cite>/g, "");
-const start = raw.indexOf('{');
-const end = raw.lastIndexOf('}');
-const jsonMatch = start !== -1 && end !== -1 ? [raw.slice(start, end + 1)] : null;
+const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
+const jsonMatch = raw.match(/\{[\s\S]*\}/);
 const cleaned = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
 const removeCite = (obj) => {
   if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
@@ -423,13 +421,7 @@ const removeCite = (obj) => {
   return obj;
 };
 
-try {
-  const parsed = JSON.parse(cleaned);
-return typeof parsed === 'object' ? parsed : JSON.parse(parsed);
-} catch(e) {
-  console.error("JSON parse error:", e, "cleaned:", cleaned.substring(0, 200));
-  return {};
-}
+return removeCite(JSON.parse(cleaned));
 }
 
 async function getExchangeRates() {
@@ -946,7 +938,7 @@ MANDATORY SOURCES TO SEARCH:
 
 LEGAL: Present as market observations only. Not financial advice. Not professional authentication. Cite all sources used.
 
-Return ONLY the raw JSON object below, starting with { and ending with }. No text before or after. No markdown. No explanation. Just the JSON:
+Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
 {
   "identified": true,
   "house": "brand name",
