@@ -392,8 +392,7 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
   if (!data.content) throw new Error("NO_CONTENT: " + JSON.stringify(data));
   const textBlocks = data.content.filter(b => b.type === "text");
   if (!textBlocks.length) throw new Error("NO_TEXT_BLOCKS: types=" + data.content.map(b=>b.type).join(","));
-  const allText = textBlocks.map(b => b.text).join(" ");
-const raw = allText || "{}";
+  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error("NO_JSON_MATCH: raw=" + raw.substring(0, 200));
   return JSON.parse(jsonMatch[0]);
@@ -401,10 +400,11 @@ const raw = allText || "{}";
 
 async function callClaudeTextJSON(prompt) {
   const body = {
-  model: "claude-haiku-4-5-20251001",
-  max_tokens: 2000,
-  messages: [{ role: "user", content: prompt }],
-};
+    model: "claude-sonnet-4-5",
+max_tokens: 4000,
+tools: [{ type: "web_search_20250305", name: "web_search" }],
+    messages: [{ role: "user", content: prompt }],
+  };
   const res = await fetch("/api/aurum", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ action: "claude", body }),
@@ -417,7 +417,7 @@ const end = raw.lastIndexOf('}');
 const jsonMatch = start !== -1 && end !== -1 ? [raw.slice(start, end + 1)] : null;
 const cleaned = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
 const removeCite = (obj) => {
-  if (typeof obj === "string") return obj.replace(/<cite[^>]*?>[\s\S]*?<\/cite>/g, (m) => m.replace(/<[^>]*>/g, ''));
+  if (typeof obj === "string") return obj.replace(/<cite[^>]*>|<\/cite>/g, "");
   if (Array.isArray(obj)) return obj.map(removeCite);
   if (obj && typeof obj === "object") return Object.fromEntries(Object.entries(obj).map(([k,v]) => [k, removeCite(v)]));
   return obj;
@@ -425,8 +425,7 @@ const removeCite = (obj) => {
 
 try {
   const parsed = JSON.parse(cleaned);
-const result = typeof parsed === 'object' && parsed !== null ? parsed : JSON.parse(parsed);
-return removeCite(result);
+return typeof parsed === 'object' ? parsed : JSON.parse(parsed);
 } catch(e) {
   console.error("JSON parse error:", e, "cleaned:", cleaned.substring(0, 200));
   return {};
@@ -933,7 +932,7 @@ const [errorMsg, setErrorMsg] = useState("");
     setPhase("loading"); setResult(null);
     try {
       const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-const prompt =`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}. CRITICAL: Never use <cite> or any HTML tags in your JSON values.
+`You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}. CRITICAL: Never use <cite> or any HTML tags in your JSON values.
 
 Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
@@ -984,7 +983,7 @@ setErrorMsg("");
 setPhase("result");
 } catch (err) { 
   setPhase("error"); 
-  setErrorMsg(err?.message || "Erreur de chargement");
+  setErrorMsg(String(err?.message || err || "Unknown")); 
 }
   };
 
@@ -1042,7 +1041,7 @@ setPhase("result");
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "rgba(200,155,60,0.75)", textTransform: "uppercase", marginBottom: 6 }}>{result.house} · {result.category}</div>
             <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, color: "rgba(255,255,255,0.9)", marginBottom: 10 }}>{result.piece}</div>
-           {result.overview}
+           <p style={{ fontFamily: "'DM Sans',sans-serif", <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.92)", lineHeight: 1.65, margin: 0 }}>{result.overview}</p>
           </div>
 
           <div style={{ background: "rgba(200,155,60,0.04)", border: "1px solid rgba(200,155,60,0.12)", borderRadius: 14, padding: "18px 22px", marginBottom: 12 }}>
