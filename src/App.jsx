@@ -459,6 +459,7 @@ function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const [mode, setMode] = useState("buy");
   const [phase, setPhase] = useState("idle");
   const [condition, setCondition] = useState(null);
+  const [askingPrice, setAskingPrice] = useState("");
   const [result, setResult] = useState(null);
   const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
@@ -496,6 +497,7 @@ const [errorMsg, setErrorMsg] = useState("");
 
 Analyze this luxury item photo. Search for current market prices as of ${today}.
 User is in ${city.name}, ${city.country}.
+${askingPrice ? `Asking price declared by seller: ${askingPrice} (user's local currency). Compare this to market value and factor it into your verdict and delta.` : ""}
 
 LEGAL CONSTRAINTS:
 - Never recommend specific platforms or sellers
@@ -526,7 +528,8 @@ Return ONLY valid JSON — no markdown. All text values must be in ${langName}:
     "summary": "2 sentences synthesising all factors and their combined impact on value in ${langName}"
   },
   "priceContext": "one sentence in ${langName}",
-  "delta": "e.g. +18% below market",
+  "delta": "e.g. +18% below market or 'Asking price is 15% above market'", 
+  "priceVerdict": "if asking price provided: is it a good deal, fair, or overpriced? one sentence in ${langName}",
   "priceSource": "source note in ${langName}",
   "trend": "rising|stable|falling",
   "trendNote": "one sentence in ${langName}",
@@ -676,7 +679,20 @@ Return ONLY valid JSON — no markdown, no preamble:
           {condition && <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "rgba(34,197,94,0.5)", textTransform: "uppercase", marginTop: 20, marginBottom: 12, textAlign: "center" }}>{t(lang, "photo_step")}</div>}
         </div>
       )}
-
+{mode === "buy" && (
+  <div style={{ marginBottom: 20 }}>
+    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "rgba(200,155,60,0.5)", textTransform: "uppercase", marginBottom: 12, textAlign: "center" }}>
+      {lang === "fr" ? "Prix demandé (optionnel)" : lang === "ja" ? "希望価格（任意）" : "Asking price (optional)"}
+    </div>
+    <input
+      type="number"
+      value={askingPrice}
+      onChange={e => setAskingPrice(e.target.value)}
+      placeholder={lang === "fr" ? "ex. 4500 €" : lang === "ja" ? "例：¥500,000" : "e.g. 4500 €"}
+      style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(200,155,60,0.2)", borderRadius: 12, padding: "14px 18px", fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.8)", outline: "none" }}
+    />
+  </div>
+)}
       {(mode === "buy" || (mode === "sell" && condition)) && (
         <div>
           <div onClick={() => fileRef.current?.click()} style={{ border: `2px dashed ${mode === "sell" ? "rgba(34,197,94,0.25)" : "rgba(200,155,60,0.2)"}`, borderRadius: 20, padding: "48px 24px", textAlign: "center", cursor: "pointer", background: mode === "sell" ? "rgba(34,197,94,0.02)" : "rgba(200,155,60,0.02)", transition: "all 0.3s" }}
@@ -802,6 +818,12 @@ Return ONLY valid JSON — no markdown, no preamble:
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: sc?.color }}>{result.delta}</div>
               </div>
             </div>
+            {result.priceVerdict && askingPrice && (
+  <div style={{ background: "rgba(200,155,60,0.08)", border: "1px solid rgba(200,155,60,0.25)", borderRadius: 10, padding: "10px 16px", marginBottom: 10, display: "flex", gap: 8, alignItems: "center" }}>
+    <span>💰</span>
+    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 400, color: "rgba(200,155,60,0.9)", margin: 0 }}>{result.priceVerdict}</p>
+  </div>
+)}
             {result.priceContext && <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.92)", margin: "10px 0 0", lineHeight: 1.5, fontStyle: "italic" }}>{result.priceContext}</p>}
           {result.valueFactors?.summary && <div style={{ display: "flex", gap: 8, alignItems: "flex-start", marginTop: 10 }}>
             <span style={{ fontSize: 12 }}>🎨</span>
@@ -895,7 +917,7 @@ Return ONLY valid JSON — no markdown, no preamble:
         <div style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.1)", borderRadius: 12, padding: "12px 16px", marginBottom: 20 }}>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>⚠ {result.disclaimer}</p>
         </div>
-        <button onClick={() => { setPhase("idle"); setResult(null); setPreview(null); setCondition(null); }} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)" }}>
+        <button onClick={() => { setPhase("idle"); setResult(null); setPreview(null); setCondition(null); setAskingPrice(""); }} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)" }}>
           {t(lang, isBuy ? "scan_another" : "analyse_another")}
         </button>
       </div>
