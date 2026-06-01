@@ -376,7 +376,7 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
   });
   const compressed = await compressBase64(base64, mimeType);
   const body = {
-    model: "claude-sonnet-4-5",
+    model: "claude-haiku-4-5-20251001",
     max_tokens: 2000,
     messages: [{ role: "user", content: [
       { type: "image", source: { type: "base64", media_type: "image/jpeg", data: compressed } },
@@ -400,7 +400,7 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
 
 async function callClaudeTextJSON(prompt) {
   const body = {
-    model: "claude-sonnet-4-5",
+    model: "claude-haiku-4-5-20251001",
 max_tokens: 4000,
 tools: [{ type: "web_search_20250305", name: "web_search" }],
     messages: [{ role: "user", content: prompt }],
