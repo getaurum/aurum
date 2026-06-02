@@ -165,7 +165,7 @@ const T = {
     auth_guide_locked: "🔒 Guide d'authentification complet",
     market_context: "Contexte de Marché",
     limit_title: "Vos 3 scans gratuits sont utilisés.",
-    limit_sub: "Soyez parmi les premiers à accéder à Aurum. Inscrivez-vous au prix de lancement — 9€/mois.",
+    limit_sub: "Soyez parmi les premiers à accéder à Aurum. Inscrivez-vous au prix de lancement — 9,99€/mois.",
     limit_research: "La recherche est toujours gratuite — sans limite.",
     join_waitlist: "Rejoindre la liste →",
     early_access: "Accès Anticipé",
