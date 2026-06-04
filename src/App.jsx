@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useUser, SignIn } from "@clerk/react";
 
 /* ─── TRANSLATIONS ─── */
 const T = {
@@ -1131,6 +1132,9 @@ setPhase("result");
 
 /* ─── MAIN APP ─── */
 export default function Aurum() {
+  const { isSignedIn, isLoaded } = useUser();
+if (!isLoaded) return null;
+if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "#0c0c16" }}><SignIn /></div>;
   const [city, setCity] = useState(CITIES[0]);
   const [lang, setLang] = useState("en");
   const [showCitySelector, setShowCitySelector] = useState(false);
