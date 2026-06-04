@@ -747,7 +747,7 @@ Return ONLY valid JSON — no markdown, no preamble:
       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontStyle: "italic", color: "rgba(255,255,255,0.8)", marginBottom: 10 }}>{t(lang, "limit_title")}</div>
       <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, marginBottom: 10 }}>{t(lang, "limit_sub")}</p>
       <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontStyle: "italic", color: "rgba(255,255,255,0.88)", marginBottom: 28 }}>{t(lang, "limit_research")}</p>
-      <button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>Accès illimité — 9,99€/mois →</button> style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>S'abonner — 9,99€/mois →</button>
+<button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>Accès illimité — 9,99€/mois →</button>
     </div>
   );
 
