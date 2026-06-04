@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useUser, SignIn } from "@clerk/react";
+import { useUser, SignIn, SignOutButton } from "@clerk/react";
 
 /* ─── TRANSLATIONS ─── */
 const T = {
@@ -467,7 +467,12 @@ function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
 const [errorMsg, setErrorMsg] = useState("");
-  const [scansUsed, setScansUsed] = useState(() => parseInt(localStorage.getItem(scanKey) || "0"));
+const [scansUsed, setScansUsed] = useState(0);
+useEffect(() => {
+  if (user?.id) {
+    setScansUsed(parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0"));
+  }
+}, [user?.id]);
   const fileRef = useRef(null);
   const cameraRef = useRef(null);
   const MAX_SCANS = isOwner ? maxScansOverride : 3;
@@ -1284,6 +1289,7 @@ if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", jus
               <span style={{ fontSize: 10, opacity: 0.4 }}>▾</span>
             </button>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.88)", letterSpacing: "0.1em" }}>{t(lang, "not_financial")}</div>
+            <SignOutButton><button style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)" }}>Déconnexion</button></SignOutButton>
           </div>
         </nav>
 
