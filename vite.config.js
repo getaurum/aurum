@@ -6,4 +6,10 @@ export default defineConfig({
   build: {
     outDir: 'dist',
   },
+  optimizeDeps: {
+    include: ['@clerk/react'],
+  },
+  ssr: {
+    noExternal: ['@clerk/react'],
+  },
 })
