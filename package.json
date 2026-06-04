@@ -11,7 +11,7 @@
 "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "@clerk/react": "^4.0.0"
+    "@clerk/react": "^6.7.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
