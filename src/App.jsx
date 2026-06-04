@@ -480,12 +480,13 @@ useEffect(() => {
   const MAX_SCANS = isOwner ? maxScansOverride : 3;
 
 const incrementScan = () => {
-    const n = scansUsed + 1;
-if (user?.id) {
-  localStorage.setItem(`aurum_scans_${user.id}`, n);
-}
-    setScansUsed(n);
-  };
+  const n = scansUsed + 1;
+  console.log("Saving scan for user:", user?.id, "n:", n);
+  if (user?.id) {
+    localStorage.setItem(`aurum_scans_${user.id}`, n);
+  }
+  setScansUsed(n);
+};
 
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
 
