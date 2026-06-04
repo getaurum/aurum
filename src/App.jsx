@@ -479,7 +479,9 @@ useEffect(() => {
 
 const incrementScan = () => {
     const n = scansUsed + 1;
-    localStorage.setItem(scanKey, n);
+if (user?.id) {
+  localStorage.setItem(`aurum_scans_${user.id}`, n);
+}
     setScansUsed(n);
   };
 
