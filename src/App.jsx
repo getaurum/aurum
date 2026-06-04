@@ -457,6 +457,8 @@ function CitySelector({ currentCity, onSelect, onClose, lang }) {
 
 /* ─── SCAN SECTION ─── */
 function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
+  const { user } = useUser();
+  const scanKey = `aurum_scans_${user?.id || "guest"}`;
   const [mode, setMode] = useState("buy");
   const [phase, setPhase] = useState("idle");
   const [condition, setCondition] = useState(null);
@@ -465,14 +467,14 @@ function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
 const [errorMsg, setErrorMsg] = useState("");
-  const [scansUsed, setScansUsed] = useState(() => parseInt(localStorage.getItem("aurum_scans_total") || "0"));
+  const [scansUsed, setScansUsed] = useState(() => parseInt(localStorage.getItem(scanKey) || "0"));
   const fileRef = useRef(null);
   const cameraRef = useRef(null);
   const MAX_SCANS = isOwner ? maxScansOverride : 3;
 
-  const incrementScan = () => {
+const incrementScan = () => {
     const n = scansUsed + 1;
-    localStorage.setItem("aurum_scans_total", n);
+    localStorage.setItem(scanKey, n);
     setScansUsed(n);
   };
 
