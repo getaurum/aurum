@@ -470,7 +470,9 @@ const [errorMsg, setErrorMsg] = useState("");
 const [scansUsed, setScansUsed] = useState(0);
 useEffect(() => {
   if (user?.id) {
-    setScansUsed(parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0"));
+    const saved = parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
+    console.log("Loading scans for user:", user.id, "scans:", saved);
+    setScansUsed(saved);
   }
 }, [user?.id]);
   const fileRef = useRef(null);
