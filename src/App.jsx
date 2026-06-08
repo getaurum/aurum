@@ -457,17 +457,15 @@ function CitySelector({ currentCity, onSelect, onClose, lang }) {
 
 /* ─── SCAN SECTION ─── */
 function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
-  const { user } = useUser();
-  const { isSignedIn, isLoaded } = useUser();
-if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
-if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
-  const scanKey = `aurum_scans_${user?.id || "guest"}`;
-  const [mode, setMode] = useState("buy");
-  const [phase, setPhase] = useState("idle");
-  const [condition, setCondition] = useState(null);
-  const [askingPrice, setAskingPrice] = useState("");
-  const [result, setResult] = useState(null);
-  const [preview, setPreview] = useState(null);
+const { user } = useUser();
+const { isSignedIn, isLoaded } = useUser();
+const scanKey = `aurum_scans_${user?.id || "guest"}`;
+const [mode, setMode] = useState("buy");
+const [phase, setPhase] = useState("idle");
+const [condition, setCondition] = useState(null);
+const [askingPrice, setAskingPrice] = useState("");
+const [result, setResult] = useState(null);
+const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
 const [errorMsg, setErrorMsg] = useState("");
 const [scansUsed, setScansUsed] = useState(() => {
@@ -485,8 +483,9 @@ useEffect(() => {
 }, [user?.id]);
   const fileRef = useRef(null);
   const cameraRef = useRef(null);
-  const MAX_SCANS = isOwner ? maxScansOverride : 3;
-
+const MAX_SCANS = isOwner ? maxScansOverride : 3;
+if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
+if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
 const incrementScan = () => {
   const n = scansUsed + 1;
   console.log("Saving scan for user:", user?.id, "n:", n);
@@ -950,22 +949,14 @@ Return ONLY valid JSON — no markdown, no preamble:
 /* ─── RESEARCH SECTION ─── */
 function ResearchSection({ isOwner, lang }) {
   const { isSignedIn, isLoaded } = useUser();
-if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
-if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState("idle");
-const [result, setResult] = useState(null);
-const [errorMsg, setErrorMsg] = useState("");
+  const [result, setResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
-
+  if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
+  if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
   const search = async () => {
-    if (!query.trim()) return;
-    setPhase("loading"); setResult(null);
-    try {
-      const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-const prompt = `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
-
-Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
 MANDATORY SOURCES TO SEARCH:
 - Vestiaire Collective: current pre-owned listings and recent sold prices
