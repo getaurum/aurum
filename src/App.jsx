@@ -481,11 +481,11 @@ useEffect(() => {
     setScansUsed(saved);
   }
 }, [user?.id]);
-  const fileRef = useRef(null);
+const fileRef = useRef(null);
   const cameraRef = useRef(null);
+  if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
+  if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
 const MAX_SCANS = isOwner ? maxScansOverride : 3;
-if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
-if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
 const incrementScan = () => {
   const n = scansUsed + 1;
   console.log("Saving scan for user:", user?.id, "n:", n);
