@@ -956,7 +956,14 @@ function ResearchSection({ isOwner, lang }) {
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
   if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
   if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
-  const search = async () => {
+const search = async () => {
+    if (!query.trim()) return;
+    setPhase("loading"); setResult(null);
+    try {
+      const today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+      const prompt = `You are AURUM, a luxury market intelligence agent. RESPOND ENTIRELY IN ${langName.toUpperCase()}.
+
+Search the web RIGHT NOW for comprehensive market intelligence on: "${query}"
 
 MANDATORY SOURCES TO SEARCH:
 - Vestiaire Collective: current pre-owned listings and recent sold prices
@@ -997,15 +1004,14 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
   "sources": ["actual source 1 consulted", "actual source 2 consulted"],
   "dataDate": "${today}",
   "disclaimer": "short disclaimer in ${langName}"
-}`
-const data = await callClaudeTextJSON(prompt);
-
-setResult(data);
-setPhase("result");
-} catch (err) { 
-  setPhase("error"); 
-  setErrorMsg(String(err?.message || err || "Unknown")); 
-}
+}`;
+      const data = await callClaudeTextJSON(prompt);
+      setResult(data);
+      setPhase("result");
+    } catch (err) { 
+      setPhase("error"); 
+      setErrorMsg(String(err?.message || err || "Unknown")); 
+    }
   };
 
   const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
