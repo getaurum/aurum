@@ -1207,9 +1207,6 @@ const { isSignedIn, isLoaded } = useUser();
     { id: "scan",     label: t(lang, "tab_scan"),     icon: "📷" },
     { id: "research", label: t(lang, "tab_research"), icon: "🔍" },
   ];
-
-if (!isLoaded) return null;
-if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "#0c0c16" }}><SignIn /></div>;
   return (
     <div style={{ minHeight: "100vh", background: "#0c0c16", color: "#e8e0d0", overflowX: "hidden" }}>
       <style>{`
