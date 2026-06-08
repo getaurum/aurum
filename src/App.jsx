@@ -1156,6 +1156,7 @@ setPhase("result");
 /* ─── MAIN APP ─── */
 export default function Aurum() {
 const { isSignedIn, isLoaded } = useUser();
+  if (!isLoaded) return null;
   const [city, setCity] = useState(CITIES[0]);
   const [lang, setLang] = useState("en");
   const [showCitySelector, setShowCitySelector] = useState(false);
