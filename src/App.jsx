@@ -1302,7 +1302,7 @@ const { isSignedIn, isLoaded } = useUser();
               <span style={{ fontSize: 10, opacity: 0.4 }}>▾</span>
             </button>
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.88)", letterSpacing: "0.1em" }}>{t(lang, "not_financial")}</div>
-            <SignOutButton><button style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)" }}>Déconnexion</button></SignOutButton>
+{isSignedIn && <SignOutButton><button style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.55)" }}>Déconnexion</button></SignOutButton>}
           </div>
         </nav>
 
