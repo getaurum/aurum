@@ -1156,7 +1156,7 @@ setPhase("result");
 /* ─── MAIN APP ─── */
 export default function Aurum() {
 const { isSignedIn, isLoaded } = useUser();
-  if (!isLoaded) return null;
+if (!isLoaded) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
   const [city, setCity] = useState(CITIES[0]);
   const [lang, setLang] = useState("en");
   const [showCitySelector, setShowCitySelector] = useState(false);
