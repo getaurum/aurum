@@ -954,9 +954,8 @@ function ResearchSection({ isOwner, lang }) {
   const [result, setResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
-  if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
-  if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
-const search = async () => {
+  const search = async () => {
+    if (!isLoaded || !isSignedIn) return;
     if (!query.trim()) return;
     setPhase("loading"); setResult(null);
     try {
@@ -1014,7 +1013,10 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
     }
   };
 
-  const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
+const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
+
+  if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
+  if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
