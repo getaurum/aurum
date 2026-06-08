@@ -467,7 +467,12 @@ function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
 const [errorMsg, setErrorMsg] = useState("");
-const [scansUsed, setScansUsed] = useState(0);
+const [scansUsed, setScansUsed] = useState(() => {
+  if (user?.id) {
+    return parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
+  }
+  return 0;
+});
 useEffect(() => {
   if (user?.id) {
     const saved = parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
