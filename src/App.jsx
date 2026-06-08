@@ -459,7 +459,7 @@ function CitySelector({ currentCity, onSelect, onClose, lang }) {
 function ScanSection({ rates, city, isOwner, lang, maxScansOverride = 999 }) {
   const { user } = useUser();
   const { isSignedIn, isLoaded } = useUser();
-if (!isLoaded) return null;
+if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
 if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
   const scanKey = `aurum_scans_${user?.id || "guest"}`;
   const [mode, setMode] = useState("buy");
@@ -950,7 +950,7 @@ Return ONLY valid JSON — no markdown, no preamble:
 /* ─── RESEARCH SECTION ─── */
 function ResearchSection({ isOwner, lang }) {
   const { isSignedIn, isLoaded } = useUser();
-if (!isLoaded) return null;
+if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
 if (!isSignedIn) return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "60px 24px", background: "#0c0c16" }}><SignIn /></div>;
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState("idle");
