@@ -1154,8 +1154,7 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
 
 /* ─── MAIN APP ─── */
 export default function Aurum() {
-const { isSignedIn, isLoaded } = useUser();
-if (!isLoaded) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
+  const { isSignedIn, isLoaded } = useUser();
   const [city, setCity] = useState(CITIES[0]);
   const [lang, setLang] = useState("en");
   const [showCitySelector, setShowCitySelector] = useState(false);
@@ -1173,6 +1172,7 @@ if (!isLoaded) return <div style={{ minHeight: "100vh", background: "#0c0c16" }}
   const [showOwnerInput, setShowOwnerInput] = useState(false);
   const waitlistCount = 2147;
   const year = new Date().getFullYear();
+  if (!isLoaded) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
 
   // Detect language from browser
   useEffect(() => {
