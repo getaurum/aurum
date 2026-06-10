@@ -17,7 +17,7 @@ const T = {
     scan_label: "Instant Value",
     scan_title: "What is its real value?\nIs now the right time?",
     scan_sub: "Photograph the piece. Aurum analyses its real value — material, colour, size, condition — and tells you clearly if it's worth buying, worth negotiating, or the right time to sell.",
-    scan_free_note: "{n} free scan(s) remaining · Unlimited access at €9.99/month",
+    scan_free_note: "{n} free analyse(s) remaining · Unlimited access at €9.99/month",
     research_label: "Deep Research",
     research_title: "What is the real value of this piece?",
     research_sub: "Enter any piece name. Aurum searches auction records, market reports and public price data to give you a complete picture — what it's worth, where it's heading, and what to check before buying.",
@@ -115,7 +115,7 @@ const T = {
     scan_label: "Valeur Instantanée",
     scan_title: "Quelle est sa valeur réelle ?\nEst-ce le bon moment ?",
     scan_sub: "Photographiez la pièce. Aurum analyse sa valeur réelle — matière, couleur, taille, état — et vous dit clairement si elle est au bon prix, si vous devez négocier, ou si c'est le bon moment pour vendre.",
-    scan_free_note: "{n} scan(s) gratuit(s) restant(s) · Accès illimité à 9,99€/mois",
+    scan_free_note: "{n} analyse(s) gratuite(s) restante(s) · Accès illimité à 9,99€/mois",
     research_label: "Recherche Approfondie",
     research_title: "Quelle est la vraie valeur de cette pièce ?",
     research_sub: "Entrez le nom d'une pièce. Aurum analyse les résultats d'enchères, les rapports marché et les données publiques pour vous donner sa valeur réelle — selon la matière, la couleur, la taille et l'état — et ce qu'il faut vérifier avant d'acheter.",
@@ -213,7 +213,7 @@ const T = {
     scan_label: "即時判定",
     scan_title: "本当の価値は？\n今がその時？",
     scan_sub: "ラグジュアリーアイテムを撮影するだけ。Aurumがリアル市場データと照合し、明確に判定：購入・交渉・見送り。売却の場合は最適価格と最適タイミングをご提案。",
-    scan_free_note: "残り{n}回の無料スキャン · 月額€9.99で無制限アクセス",
+    scan_free_note: "残り{n}回の無料分析 · 月額€9.99で無制限アクセス",
     research_label: "市場インテリジェンス",
     research_title: "ラグジュアリーアイテムを調査。",
     research_sub: "アイテム名を入力。価格履歴、価値要因、真贋ガイドなど深い市場分析を取得。オークション結果と公開市場データを参照。",
@@ -1041,6 +1041,7 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
           onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.1)"} />
         <button onClick={search} disabled={!query.trim() || phase === "loading"} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 24px", cursor: query.trim() ? "pointer" : "default", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 500, color: "#080810", opacity: query.trim() ? 1 : 0.4, transition: "all 0.3s", boxShadow: "0 4px 16px rgba(200,155,60,0.2)" }}>{t(lang, "research_btn")}</button>
       </div>
+      {!isOwner && <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)", marginTop: 8, textAlign: "center" }}>{t(lang, "scan_free_note", { n: MAX_ANALYSES - analysesUsed })}</div>}
 
       {/* Research bullets - shown only when idle */}
       {phase === "idle" && (
