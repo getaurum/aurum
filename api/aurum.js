@@ -41,7 +41,7 @@ export default async function handler(req, res) {
     }
   }
   if (action === 'register') {
-  const { email } = req.body;
+const { email } = body || req.body;
   if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
   try {
     const response = await fetch('https://api.brevo.com/v3/contacts', {
