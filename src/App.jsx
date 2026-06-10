@@ -1173,10 +1173,7 @@ export default function Aurum() {
   const [showOwnerInput, setShowOwnerInput] = useState(false);
   const waitlistCount = 2147;
   const year = new Date().getFullYear();
-  useEffect(() => { if (isLoaded) setReady(true); }, [isLoaded]);
-  if (!ready) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
-
-  // Detect language from browser
+useEffect(() => { if (isLoaded) setReady(true); }, [isLoaded]);
   useEffect(() => {
     const browserLang = navigator.language?.substring(0, 2);
     if (browserLang === "fr") setLang("fr");
@@ -1198,6 +1195,7 @@ export default function Aurum() {
   }, []);
 
   useEffect(() => { setTimeout(() => setMounted(true), 100); getExchangeRates().then(setRates); }, []);
+  if (!ready) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
 
   const handleCityChange = (newCity) => { setCity(newCity); setIsTripMode(true); };
   const handleOwnerCode = () => {
