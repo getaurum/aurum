@@ -948,14 +948,22 @@ Return ONLY valid JSON — no markdown, no preamble:
 
 /* ─── RESEARCH SECTION ─── */
 function ResearchSection({ isOwner, lang }) {
-  const { isSignedIn, isLoaded } = useUser();
+  const { isSignedIn, isLoaded, user } = useUser();
   const [query, setQuery] = useState("");
   const [phase, setPhase] = useState("idle");
   const [result, setResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [analysesUsed, setAnalysesUsed] = useState(0);
+  useEffect(() => {
+    if (user?.id) {
+      setAnalysesUsed(parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0"));
+    }
+  }, [user?.id]);
+  const MAX_ANALYSES = 3;
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
   const search = async () => {
     if (!isLoaded || !isSignedIn) return;
+    if (analysesUsed >= MAX_ANALYSES && !isOwner) return;
     if (!query.trim()) return;
     setPhase("loading"); setResult(null);
     try {
