@@ -1168,7 +1168,7 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
 
 /* ─── MAIN APP ─── */
 export default function Aurum() {
-  const { isSignedIn, isLoaded } = useUser();
+const { isSignedIn, isLoaded, user } = useUser();
   const [ready, setReady] = useState(false);
   const [city, setCity] = useState(CITIES[0]);
   const [lang, setLang] = useState("en");
