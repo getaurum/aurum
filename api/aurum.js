@@ -40,7 +40,7 @@ return res.status(200).json({ success: true, brevo: data });
       return res.status(500).json({ error: 'Brevo API error' });
     }
   }
-  if (action === 'register') {
+if (action === 'register') {
     const email = req.body.email;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
     try {
@@ -49,12 +49,10 @@ return res.status(200).json({ success: true, brevo: data });
         headers: { 'Content-Type': 'application/json', 'api-key': process.env.BREVO_API_KEY },
         body: JSON.stringify({ email, listIds: [2], updateEnabled: true }),
       });
-      if (response.status === 201 || response.status === 204) return res.status(200).json({ success: true });
       const data = await response.json();
-      if (data.code === 'duplicate_parameter') return res.status(200).json({ success: true });
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true, status: response.status, brevo: data });
     } catch (error) {
-      return res.status(500).json({ error: 'Brevo API error' });
+      return res.status(500).json({ error: error.message });
     }
   }
   return res.status(400).json({ error: 'Unknown action' });
