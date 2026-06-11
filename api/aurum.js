@@ -50,7 +50,7 @@ if (action === 'register') {
         body: JSON.stringify({ email, listIds: [2], updateEnabled: true }),
       });
       const data = await response.json();
-      return res.status(200).json({ success: true, status: response.status, brevo: data });
+return res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
