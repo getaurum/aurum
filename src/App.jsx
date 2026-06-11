@@ -1217,7 +1217,7 @@ useEffect(() => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'register', email })
-        }).then(r => r.json()).then(d => console.log("Brevo result:", JSON.stringify(d)));
+        });
       }
     }
   }, [isSignedIn, user?.id]);
