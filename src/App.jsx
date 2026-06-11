@@ -1210,14 +1210,18 @@ useEffect(() => { if (isLoaded) setReady(true); }, [isLoaded]);
 
   useEffect(() => { setTimeout(() => setMounted(true), 100); getExchangeRates().then(setRates); }, []);
   useEffect(() => {
-  if (isSignedIn && user?.primaryEmailAddress?.emailAddress) {
-    fetch('/api/aurum', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'register', email: user.primaryEmailAddress.emailAddress })
-    });
-  }
-}, [isSignedIn, user?.primaryEmailAddress?.emailAddress]);
+    if (isSignedIn && user) {
+      const email = user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress;
+      console.log("Register email:", email);
+      if (email) {
+        fetch('/api/aurum', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'register', email })
+        });
+      }
+    }
+  }, [isSignedIn, user?.id]);
   if (!ready) return <div style={{ minHeight: "100vh", background: "#0c0c16" }} />;
 
   const handleCityChange = (newCity) => { setCity(newCity); setIsTripMode(true); };
