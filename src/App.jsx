@@ -1209,16 +1209,15 @@ useEffect(() => { if (isLoaded) setReady(true); }, [isLoaded]);
   }, []);
 
   useEffect(() => { setTimeout(() => setMounted(true), 100); getExchangeRates().then(setRates); }, []);
-  useEffect(() => {
+useEffect(() => {
     if (isSignedIn && user) {
       const email = user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress;
-      console.log("Register email:", email);
       if (email) {
         fetch('/api/aurum', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'register', email })
-        });
+        }).then(r => r.json()).then(d => console.log("Brevo result:", JSON.stringify(d)));
       }
     }
   }, [isSignedIn, user?.id]);
