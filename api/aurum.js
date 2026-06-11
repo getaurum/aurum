@@ -32,10 +32,10 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json', 'api-key': process.env.BREVO_API_KEY },
         body: JSON.stringify({ email, listIds: [2], updateEnabled: true }),
       });
-      if (response.status === 201 || response.status === 204) return res.status(200).json({ success: true });
-      const data = await response.json();
-      if (data.code === 'duplicate_parameter') return res.status(200).json({ success: true });
-      return res.status(400).json({ error: 'Subscription failed' });
+const data = await response.json();
+console.log("Brevo response:", response.status, JSON.stringify(data));
+if (response.status === 201 || response.status === 204 || data.code === 'duplicate_parameter') return res.status(200).json({ success: true });
+return res.status(200).json({ success: true, brevo: data });
     } catch (error) {
       return res.status(500).json({ error: 'Brevo API error' });
     }
