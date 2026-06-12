@@ -1136,6 +1136,7 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
           <div style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.1)", borderRadius: 12, padding: "12px 16px", marginBottom: 20 }}>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>⚠ {result.disclaimer}</p>
           </div>
+          {!isOwner && <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(200,155,60,0.7)", textAlign: "center", marginBottom: 14 }}>{t(lang, "analyses_left_cta", { n: MAX_ANALYSES - analysesUsed })}</p>}
           <button onClick={() => { setPhase("idle"); setResult(null); setQuery(""); }} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)" }}>{t(lang, "new_search")}</button>
         </div>
       )}
