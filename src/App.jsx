@@ -1058,9 +1058,9 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
         </div>
       )}
 
-      {phase === "error" && (
+{phase === "error" && (
         <div style={{ textAlign: "center", padding: 40 }}>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(239,68,68,0.7)", marginBottom: 16 }}>{t(lang, "search_fail")}<br/><small style={{wordBreak:"break-all",fontSize:10}}>{errorMsg}</small></p>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, color: "rgba(239,68,68,0.7)", marginBottom: 16 }}>{t(lang, "search_fail")}</p>
           <button onClick={() => setPhase("idle")} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "10px 22px", color: "rgba(255,255,255,0.92)", fontFamily: "'DM Sans',sans-serif", fontSize: 11, cursor: "pointer" }}>{t(lang, "try_again")}</button>
         </div>
       )}
