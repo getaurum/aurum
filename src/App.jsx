@@ -867,23 +867,10 @@ Return ONLY valid JSON — no markdown, no preamble:
             <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 8 }}>{t(lang, "visual_check")}</div>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.92)", margin: 0, lineHeight: 1.6 }}>{result.visualAuthCheck}</p>
           </div>
-          {!isOwner ? (
-            <div style={{ position: "relative", marginBottom: 12 }}>
-              <div style={{ filter: "blur(5px)", pointerEvents: "none", userSelect: "none", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px" }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 10 }}>{t(lang, "auth_signals")}</div>
-                {(result.authDetails || []).map((d, i) => <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7 }}><span style={{ color: "#22c55e" }}>✓</span><span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.92)" }}>{d}</span></div>)}
-              </div>
-              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(8,8,16,0.78)", borderRadius: 12, gap: 10 }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.92)" }}>{t(lang, "auth_locked")}</div>
-                <button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 500, color: "#080810" }}>{t(lang, "join_unlock")}</button>
-              </div>
-            </div>
-          ) : (
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px", marginBottom: 12 }}>
-              <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 10 }}>{t(lang, "auth_signals")}</div>
-              {(result.authDetails || []).map((d, i) => <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7 }}><span style={{ color: "#22c55e" }}>✓</span><span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.92)" }}>{d}</span></div>)}
-            </div>
-          )}
+<div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px", marginBottom: 12 }}>
+  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 10 }}>{t(lang, "auth_signals")}</div>
+  {(result.authDetails || []).map((d, i) => <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7 }}><span style={{ color: "#22c55e" }}>✓</span><span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.92)" }}>{d}</span></div>)}
+</div>
           {result.historicalNote && <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "12px 16px", marginBottom: 12, display: "flex", gap: 10 }}>
             <span>📊</span>
             <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.92)", margin: 0, lineHeight: 1.6 }}>{result.historicalNote}</p>
@@ -1125,23 +1112,10 @@ const trendConf = result ? (TREND[result.trend] || TREND.stable) : null;
             </div>
           </div>}
 
-          {!isOwner ? (
-            <div style={{ position: "relative", marginBottom: 12 }}>
-              <div style={{ filter: "blur(5px)", pointerEvents: "none", userSelect: "none", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px" }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 12 }}>{t(lang, "auth_guide")}</div>
-                {(result.authenticationGuide || []).map((g, i) => <div key={i} style={{ marginBottom: 10 }}><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.92)", marginBottom: 2 }}>{g.element}</div><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 300, color: "rgba(255,255,255,0.92)" }}>{g.description}</div></div>)}
-              </div>
-              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(8,8,16,0.78)", borderRadius: 12, gap: 10 }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, color: "rgba(255,255,255,0.92)" }}>{t(lang, "auth_guide_locked")}</div>
-                <button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 10, padding: "10px 22px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 500, color: "#080810" }}>{t(lang, "join_unlock")}</button>
-              </div>
-            </div>
-          ) : (
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px", marginBottom: 12 }}>
-              <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 12 }}>{t(lang, "auth_guide")}</div>
-              {(result.authenticationGuide || []).map((g, i) => <div key={i} style={{ marginBottom: 10 }}><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.92)", marginBottom: 2 }}>✓ {g.element}</div><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 300, color: "rgba(255,255,255,0.92)" }}>{g.description}</div></div>)}
-            </div>
-          )}
+<div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "16px 20px", marginBottom: 12 }}>
+            <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.2em", color: "rgba(200,155,60,0.68)", textTransform: "uppercase", marginBottom: 12 }}>{t(lang, "auth_guide")}</div>
+            {(result.authenticationGuide || []).map((g, i) => <div key={i} style={{ marginBottom: 10 }}><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.92)", marginBottom: 2 }}>✓ {g.element}</div><div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 300, color: "rgba(255,255,255,0.92)" }}>{g.description}</div></div>)}
+          </div>
 
           {result.marketContext && <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 18px", marginBottom: 12, display: "flex", gap: 10 }}>
             <span>🌍</span>
