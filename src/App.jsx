@@ -1334,6 +1334,9 @@ useEffect(() => {
             {t(lang, "hero_title_1")}<br />
             <em style={{ fontStyle: "italic", background: "linear-gradient(130deg,#c8923a,#f2cc72,#c8923a)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "shimmer 4s linear infinite" }}>{t(lang, "hero_title_2")}</em>
           </h1>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(14px,2vw,18px)", fontWeight: 500, color: "rgba(200,155,60,0.85)", maxWidth: 620, margin: "0 auto 20px", letterSpacing: "0.02em" }}>
+            {t(lang, "value_prop")}
+          </p>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(13px,1.8vw,16px)", fontWeight: 300, lineHeight: 1.7, color: "rgba(255,255,255,0.92)", maxWidth: 620, margin: "0 auto 14px" }}>
             {t(lang, "hero_sub", { year })}
           </p>
