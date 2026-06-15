@@ -1163,7 +1163,6 @@ const { isSignedIn, isLoaded, user } = useUser();
   const [accessLabel, setAccessLabel] = useState("OWNER");
   const [maxScansOverride, setMaxScansOverride] = useState(999);
   const [showOwnerInput, setShowOwnerInput] = useState(false);
-  const waitlistCount = 2147;
   const year = new Date().getFullYear();
 useEffect(() => { if (isLoaded) setReady(true); }, [isLoaded]);
   useEffect(() => {
@@ -1348,9 +1347,6 @@ useEffect(() => {
             <button className="cta-btn" onClick={() => document.getElementById("tools").scrollIntoView({ behavior: "smooth" })}>
               {t(lang, "try_free")}
             </button>
-            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.88)", letterSpacing: "0.08em" }}>
-              <strong style={{ color: "rgba(200,155,60,0.55)", fontWeight: 400 }}>{waitlistCount.toLocaleString()}</strong> {t(lang, "waitlist_count", { n: "" }).replace(waitlistCount.toLocaleString(), "").trim()}
-            </span>
             
             {showOwnerInput && !isOwner && (
               <div style={{ display: "flex", gap: 8 }}>
@@ -1414,9 +1410,6 @@ useEffect(() => {
                 <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 300, color: "rgba(255,255,255,0.88)", lineHeight: 1.5, maxWidth: 380, margin: "0 auto 16px" }}>
                   {t(lang, "waitlist_legal")}
                 </p>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(200,155,60,0.6)", letterSpacing: "0.08em" }}>
-                  {t(lang, "waitlist_count", { n: waitlistCount.toLocaleString() })}
-                </div>
               </>
             ) : (
               <div style={{ textAlign: "center" }}>
