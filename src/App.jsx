@@ -7,7 +7,7 @@ const T = {
     tagline: "Luxury Market Intelligence",
     hero_title_1: "Luxury",
     hero_title_2: "at its true value.",
-    value_prop: "Buy smarter. Sell higher. Aurum pays for itself every time.",
+    value_prop: "Buy smarter.\nSell higher.\nAurum pays for itself every time.",
     hero_sub: "Instant market analysis on every luxury piece — bag, watch, jewellery, clothing. Is it priced right? Is now the right time to buy or sell? Aurum tells you clearly, based on real data.",
     hero_legal: "Market observations only · Not financial advice · Not professional authentication",
     try_free: "Try for free →",
@@ -107,7 +107,7 @@ const T = {
     tagline: "Intelligence du Marché Luxe",
     hero_title_1: "Le luxe",
     hero_title_2: "à sa juste valeur.",
-    value_prop: "Achetez mieux. Vendez plus cher. Aurum se rembourse à chaque transaction.",
+    value_prop: "Achetez mieux.\nVendez plus cher.\nAurum se rembourse à chaque transaction.",
     hero_sub: "Analyse de marché instantanée sur toute pièce de luxe — sac, montre, bijou, vêtement. Est-elle au bon prix ? Est-ce le bon moment pour acheter ou pour vendre ? Aurum vous répond clairement, sur la base de données réelles.",
     hero_legal: "Observations de marché uniquement · Pas un conseil financier · Pas une authentification professionnelle",
     try_free: "Essayer gratuitement →",
@@ -207,7 +207,7 @@ const T = {
     tagline: "ラグジュアリー市場インテリジェンス",
     hero_title_1: "ラグジュアリー",
     hero_title_2: "の真の価値を。",
-    value_prop: "賢く買う。高く売る。Aurumは取引ごとに自己投資を回収します。",
+    value_prop: "賢く買う。\n高く売る。\nAurumは取引ごとに自己投資を回収します。",
     hero_sub: "すべてのラグジュアリーアイテムの本当の価値を知る — バッグ、時計、ジュエリー、衣類。適正価格？今が買い時？売り時？{year}年のリアルデータでAurumが明確にお答えします。",
     hero_legal: "市場観察のみ · 投資アドバイスではありません · 専門的な鑑定ではありません",
     try_free: "無料で試す →",
@@ -1334,8 +1334,8 @@ useEffect(() => {
             {t(lang, "hero_title_1")}<br />
             <em style={{ fontStyle: "italic", background: "linear-gradient(130deg,#c8923a,#f2cc72,#c8923a)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "shimmer 4s linear infinite" }}>{t(lang, "hero_title_2")}</em>
           </h1>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(14px,2vw,18px)", fontWeight: 500, color: "rgba(200,155,60,0.85)", maxWidth: 620, margin: "0 auto 20px", letterSpacing: "0.02em" }}>
-            {t(lang, "value_prop")}
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(14px,2vw,18px)", fontWeight: 500, color: "rgba(200,155,60,0.85)", maxWidth: 620, margin: "0 auto 20px", letterSpacing: "0.02em", lineHeight: 1.6 }}>
+            {t(lang, "value_prop").split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
           </p>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(13px,1.8vw,16px)", fontWeight: 300, lineHeight: 1.7, color: "rgba(255,255,255,0.92)", maxWidth: 620, margin: "0 auto 14px" }}>
             {t(lang, "hero_sub", { year })}
