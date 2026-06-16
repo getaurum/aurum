@@ -1397,6 +1397,45 @@ useEffect(() => {
           )}
         </div>
 
+<hr className="divider" />
+        <div className="sec" id="example-result">
+          <div className="sec-label" style={{ textAlign: "center" }}>{lang === "fr" ? "Exemple" : lang === "ja" ? "サンプル" : "Example"}</div>
+          <h2 className="sec-title" style={{ textAlign: "center" }}>{lang === "fr" ? "Voici ce que vous obtenez" : lang === "ja" ? "こんな結果が得られます" : "Here's what you get"}</h2>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <div style={{ display: "flex", gap: 18, marginBottom: 20, alignItems: "flex-start" }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.3em", color: "rgba(200,155,60,0.5)", textTransform: "uppercase", marginBottom: 5 }}>Hermès · Bag</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, color: "rgba(255,255,255,0.9)", lineHeight: 1.2, marginBottom: 10 }}>Birkin 30, Togo Leather</div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 5, background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: 20, padding: "4px 12px" }}>
+                  <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "#22c55e" }}>↑ {lang === "fr" ? "En hausse" : lang === "ja" ? "上昇中" : "Rising"}</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ background: "rgba(34,197,94,0.08)", border: "2px solid rgba(34,197,94,0.2)", borderRadius: 16, padding: "22px 26px", marginBottom: 14 }}>
+              <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, letterSpacing: "0.25em", color: "#22c55e", textTransform: "uppercase", marginBottom: 8, opacity: 0.7 }}>Aurum · {lang === "fr" ? "Analyse de Valeur" : lang === "ja" ? "価値分析" : "Value Analysis"}</div>
+              <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 26, color: "#22c55e", marginBottom: 10 }}>✅ {lang === "fr" ? "Achetez" : lang === "ja" ? "購入推奨" : "Buy It"}</div>
+              <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, color: "rgba(255,255,255,0.92)", margin: "0 0 8px", lineHeight: 1.5 }}>
+                {lang === "fr" ? "Excellente opportunité — 18% sous le prix moyen du marché pour cette couleur et ce cuir." : lang === "ja" ? "絶好の機会 — この色と素材の市場平均価格より18％低い。" : "Great opportunity — 18% below average market price for this colour and leather."}
+              </p>
+            </div>
+            <div style={{ background: "rgba(200,155,60,0.04)", border: "1px solid rgba(200,155,60,0.12)", borderRadius: 14, padding: "16px 20px", marginBottom: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+                <div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.2em", color: "rgba(200,155,60,0.72)", textTransform: "uppercase", marginBottom: 4 }}>{lang === "fr" ? "Valeur de Marché" : lang === "ja" ? "市場価格" : "Market Range"}</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 24, color: "rgba(255,255,255,0.88)" }}>€9,200 – €13,500</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.2em", color: "rgba(255,255,255,0.88)", textTransform: "uppercase", marginBottom: 3 }}>{lang === "fr" ? "Tendance" : lang === "ja" ? "トレンド" : "Trend"}</div>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: "#22c55e" }}>+12% / 12mo</div>
+                </div>
+              </div>
+            </div>
+            <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.5)", textAlign: "center", fontStyle: "italic", marginTop: 16 }}>
+              {lang === "fr" ? "Exemple illustratif — votre résultat sera basé sur vos propres photos et données de marché en temps réel." : lang === "ja" ? "これはサンプルです — 実際の結果はあなたの写真とリアルタイムの市場データに基づきます。" : "Illustrative example — your result will be based on your own photos and real-time market data."}
+            </p>
+          </div>
+        </div>
+
         <hr className="divider" />
         {/* WAITLIST */}
         <div className="sec" id="waitlist">
