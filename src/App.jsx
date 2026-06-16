@@ -1346,6 +1346,7 @@ useEffect(() => {
               <div style={{ background: "#0c0c16", padding: "20px 22px", textAlign: "left" }}>
                 <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 5 }}>Christian Dior · Bag</div>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: "rgba(255,255,255,0.9)", marginBottom: 14 }}>Lady Dior (modèle classique)</div>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.6)", marginBottom: 10 }}>{lang === "fr" ? "Prix demandé : " : lang === "ja" ? "希望価格：" : "Asking price: "}<strong style={{ color: "rgba(255,255,255,0.85)" }}>€2,950</strong></div>
                 <div style={{ background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.25)", borderRadius: 12, padding: "14px 16px", marginBottom: 14 }}>
                   <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 19, color: "#eab308", marginBottom: 6 }}>⚠️ {lang === "fr" ? "Négociez" : lang === "ja" ? "交渉を" : "Negotiate"}</div>
                   <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.9)", lineHeight: 1.5 }}>{lang === "fr" ? "Pièce iconique, prix stable mais sensible à la négociation." : lang === "ja" ? "象徴的なアイテム、価格は安定しているが交渉の余地あり。" : "Iconic piece, stable pricing but room to negotiate."}</div>
