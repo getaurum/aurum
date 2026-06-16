@@ -1339,6 +1339,32 @@ useEffect(() => {
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontStyle: "italic", color: "rgba(255,255,255,0.88)", maxWidth: 400, margin: "0 auto 44px", lineHeight: 1.5 }}>
             {t(lang, "hero_legal")}
           </p>
+          <div style={{ position: "relative", width: 260, margin: "0 auto 40px", borderRadius: 32, border: "3px solid rgba(200,155,60,0.35)", background: "#0e0e18", padding: 10, boxShadow: "0 25px 70px rgba(0,0,0,0.6)" }}>
+            <div style={{ position: "relative", borderRadius: 22, overflow: "hidden" }}>
+              <img src="https://images.unsplash.com/photo-1682745230951-8a5aa9a474a0?fm=jpg&q=80&w=500&auto=format&fit=crop" alt="" style={{ width: "100%", height: 160, objectFit: "cover", display: "block" }} />
+              <div style={{ background: "#0c0c16", padding: "14px 16px" }}>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 7, letterSpacing: "0.25em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 4 }}>Hermès · Bag</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 14, color: "rgba(255,255,255,0.9)", marginBottom: 8 }}>Birkin 30, Togo Leather</div>
+                <div style={{ background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: 10, padding: "8px 12px", marginBottom: 10 }}>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, color: "#22c55e", marginBottom: 3 }}>✅ {lang === "fr" ? "Achetez" : lang === "ja" ? "購入推奨" : "Buy It"}</div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, color: "rgba(255,255,255,0.85)", lineHeight: 1.4 }}>{lang === "fr" ? "18% sous le prix moyen du marché" : lang === "ja" ? "市場平均価格より18％低い" : "18% below average market price"}</div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+                  <div>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 2 }}>{lang === "fr" ? "Marché" : lang === "ja" ? "市場" : "Market"}</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 12, color: "rgba(255,255,255,0.85)" }}>€9,200–13,500</div>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", marginBottom: 2 }}>{lang === "fr" ? "Tendance" : lang === "ja" ? "トレンド" : "Trend"}</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 12, color: "#22c55e" }}>↑ +12%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.4)", fontStyle: "italic", textAlign: "center", marginBottom: 32 }}>
+            {lang === "fr" ? "Exemple illustratif" : lang === "ja" ? "イメージ例" : "Illustrative example"}
+          </p>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
           {/* Beta badge */}
           <div style={{ background: "rgba(200,155,60,0.08)", border: "1px solid rgba(200,155,60,0.2)", borderRadius: 20, padding: "6px 16px", marginBottom: 8 }}>
