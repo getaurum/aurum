@@ -1330,18 +1330,6 @@ useEffect(() => {
             {t(lang, "hero_title_1")}<br />
             <em style={{ fontStyle: "italic", background: "linear-gradient(130deg,#c8923a,#f2cc72,#c8923a)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", animation: "shimmer 4s linear infinite" }}>{t(lang, "hero_title_2")}</em>
           </h1>
-          <div style={{ position: "relative", width: 220, margin: "0 auto 28px", borderRadius: 28, border: "2px solid rgba(200,155,60,0.3)", background: "#0e0e18", padding: 8, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
-            <div style={{ position: "relative", borderRadius: 20, overflow: "hidden" }}>
-              <img src="https://images.unsplash.com/photo-1682745230951-8a5aa9a474a0?fm=jpg&q=80&w=400&auto=format&fit=crop" alt="" style={{ width: "100%", height: 140, objectFit: "cover", display: "block" }} />
-              <div style={{ background: "#0c0c16", padding: "12px 14px" }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 7, letterSpacing: "0.2em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 4 }}>Hermès · Bag</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 12, color: "rgba(255,255,255,0.9)", marginBottom: 8 }}>Birkin 30, Togo Leather</div>
-                <div style={{ background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.25)", borderRadius: 8, padding: "6px 10px", display: "inline-block" }}>
-                  <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 13, color: "#22c55e" }}>✅ {lang === "fr" ? "Achetez" : lang === "ja" ? "購入推奨" : "Buy It"}</span>
-                </div>
-              </div>
-            </div>
-          </div>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(14px,2vw,18px)", fontWeight: 500, color: "rgba(200,155,60,0.85)", maxWidth: 620, margin: "0 auto 20px", letterSpacing: "0.02em", lineHeight: 1.6 }}>
             {t(lang, "value_prop").split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
           </p>
