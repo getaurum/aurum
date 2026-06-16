@@ -1339,38 +1339,50 @@ useEffect(() => {
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontStyle: "italic", color: "rgba(255,255,255,0.88)", maxWidth: 400, margin: "0 auto 44px", lineHeight: 1.5 }}>
             {t(lang, "hero_legal")}
           </p>
-<div id="example-result" style={{ position: "relative", width: 280, margin: "0 auto 16px", borderRadius: 32, border: "3px solid rgba(200,155,60,0.35)", background: "#0e0e18", padding: 10, boxShadow: "0 25px 70px rgba(0,0,0,0.6)" }}>
-            <div style={{ position: "relative", borderRadius: 22, overflow: "hidden" }}>
-              <img src="https://images.unsplash.com/photo-1638023075118-9096e2a1a213?fm=jpg&q=80&w=560&auto=format&fit=crop" alt="" style={{ width: "100%", height: 170, objectFit: "cover", objectPosition: "center 75%", display: "block" }} />
-              <div style={{ background: "#0c0c16", padding: "16px 18px", textAlign: "left" }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 7, letterSpacing: "0.25em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 4 }}>Christian Dior · Bag</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 14, color: "rgba(255,255,255,0.9)", marginBottom: 10 }}>Lady Dior (modèle classique)</div>
-                <div style={{ background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.25)", borderRadius: 10, padding: "10px 12px", marginBottom: 10 }}>
-                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 15, color: "#eab308", marginBottom: 4 }}>⚠️ {lang === "fr" ? "Négociez" : lang === "ja" ? "交渉を" : "Negotiate"}</div>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, color: "rgba(255,255,255,0.85)", lineHeight: 1.4 }}>{lang === "fr" ? "Pièce iconique, prix stable mais sensible à la négociation." : lang === "ja" ? "象徴的なアイテム、価格は安定しているが交渉の余地あり。" : "Iconic piece, stable pricing but room to negotiate."}</div>
+<div id="example-result" style={{ position: "relative", width: 340, margin: "0 auto 16px", borderRadius: 36, border: "3px solid rgba(200,155,60,0.35)", background: "#0e0e18", padding: 12, boxShadow: "0 25px 70px rgba(0,0,0,0.6)" }}>
+            <div style={{ position: "relative", borderRadius: 26, overflow: "hidden" }}>
+              <img src="https://images.unsplash.com/photo-1638023075118-9096e2a1a213?fm=jpg&q=80&w=680&auto=format&fit=crop" alt="" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center 75%", display: "block" }} />
+              <div style={{ background: "#0c0c16", padding: "20px 22px", textAlign: "left" }}>
+                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 5 }}>Christian Dior · Bag</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: "rgba(255,255,255,0.9)", marginBottom: 14 }}>Lady Dior (modèle classique)</div>
+                <div style={{ background: "rgba(234,179,8,0.1)", border: "1px solid rgba(234,179,8,0.25)", borderRadius: 12, padding: "14px 16px", marginBottom: 14 }}>
+                  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 19, color: "#eab308", marginBottom: 6 }}>⚠️ {lang === "fr" ? "Négociez" : lang === "ja" ? "交渉を" : "Negotiate"}</div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.9)", lineHeight: 1.5 }}>{lang === "fr" ? "Pièce iconique, prix stable mais sensible à la négociation." : lang === "ja" ? "象徴的なアイテム、価格は安定しているが交渉の余地あり。" : "Iconic piece, stable pricing but room to negotiate."}</div>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 8, marginBottom: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 16 }}>
                   <div>
-                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 2 }}>{lang === "fr" ? "Marché" : lang === "ja" ? "市場" : "Market"}</div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 12, color: "rgba(255,255,255,0.85)" }}>€2,200–2,800</div>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 3 }}>{lang === "fr" ? "Marché" : lang === "ja" ? "市場" : "Market"}</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "rgba(255,255,255,0.85)" }}>€2,200–2,800</div>
                   </div>
                   <div style={{ textAlign: "right" }}>
-                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", marginBottom: 2 }}>{lang === "fr" ? "Tendance" : lang === "ja" ? "トレンド" : "Trend"}</div>
-                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 12, color: "#eab308" }}>→ {lang === "fr" ? "Stable" : lang === "ja" ? "安定" : "Stable"}</div>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: "rgba(255,255,255,0.7)", textTransform: "uppercase", marginBottom: 3 }}>{lang === "fr" ? "Tendance" : lang === "ja" ? "トレンド" : "Trend"}</div>
+                    <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 16, color: "#eab308" }}>→ {lang === "fr" ? "Stable" : lang === "ja" ? "安定" : "Stable"}</div>
                   </div>
                 </div>
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 10, marginBottom: 10 }}>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 5 }}>{lang === "fr" ? "Facteurs de valeur" : lang === "ja" ? "価値要因" : "Value Factors"}</div>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 14, marginBottom: 14 }}>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 7 }}>{lang === "fr" ? "Facteurs de valeur" : lang === "ja" ? "価値要因" : "Value Factors"}</div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.85)", lineHeight: 1.7 }}>
                     {lang === "fr" ? "Cuir verni rouge premium · Couleur phare très demandée · Taille médium universelle · Quincaillerie CD argentée" : lang === "ja" ? "プレミアム赤エナメルレザー · 高需要のシグネチャーカラー · ユニバーサルなミディアムサイズ · シルバーCDハードウェア" : "Premium red patent leather · High-demand signature colour · Universal medium size · Silver CD hardware"}
                   </div>
                 </div>
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 10 }}>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 6, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 5 }}>{lang === "fr" ? "Authentification" : lang === "ja" ? "真贋確認" : "Authentication"}</div>
-                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, color: "rgba(255,255,255,0.8)", lineHeight: 1.6 }}>
-                    ✓ {lang === "fr" ? "Matelassage losangé régulier" : lang === "ja" ? "規則的なダイヤキルティング" : "Regular diamond quilting"}<br/>
-                    ✓ {lang === "fr" ? "Gravure 'CD' nette et proportionnée" : lang === "ja" ? "明確で比例した「CD」刻印" : "Crisp, well-proportioned 'CD' engraving"}<br/>
-                    ✓ {lang === "fr" ? "Poignées chaîne cuir conformes" : lang === "ja" ? "標準的なチェーンレザーハンドル" : "Standard chain-leather handles"}
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 14, marginBottom: 14 }}>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 7 }}>{lang === "fr" ? "Performance historique" : lang === "ja" ? "過去のパフォーマンス" : "Historical Performance"}</div>
+                  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.85)", lineHeight: 1.7 }}>
+                    {lang === "fr" ? "Stabilité tarifaire remarquable depuis 2022, sans volatilité majeure. Référence du marché secondaire depuis 1995." : lang === "ja" ? "2022年以降、価格は安定しており大きな変動はありません。1995年以来、二次市場の基準モデル。" : "Remarkable price stability since 2022, no major volatility. Secondary market benchmark since 1995."}
+                  </div>
+                </div>
+                <div style={{ position: "relative", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 14 }}>
+                  <div style={{ filter: "blur(4px)", pointerEvents: "none", userSelect: "none" }}>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.15em", color: "rgba(200,155,60,0.65)", textTransform: "uppercase", marginBottom: 7 }}>{lang === "fr" ? "Authentification détaillée" : lang === "ja" ? "詳細な真贋確認" : "Detailed Authentication"}</div>
+                    <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(255,255,255,0.85)", lineHeight: 1.7 }}>
+                      ✓ {lang === "fr" ? "Matelassage losangé régulier" : "Regular diamond quilting"}<br/>
+                      ✓ {lang === "fr" ? "Gravure 'CD' nette et proportionnée" : "Crisp 'CD' engraving"}<br/>
+                      ✓ {lang === "fr" ? "Poignées chaîne cuir conformes" : "Standard chain-leather handles"}
+                    </div>
+                  </div>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(8,8,16,0.85)", borderRadius: 10, gap: 8 }}>
+                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.9)" }}>🔒 {lang === "fr" ? "Inclus avec l'abonnement" : lang === "ja" ? "サブスクリプションに含まれます" : "Included with subscription"}</span>
+                    <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(200,155,60,0.8)", fontWeight: 500 }}>50 {lang === "fr" ? "analyses/mois — 9,99€" : lang === "ja" ? "回/月 — €9.99" : "analyses/month — €9.99"}</span>
                   </div>
                 </div>
               </div>
