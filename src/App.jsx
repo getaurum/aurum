@@ -520,7 +520,8 @@ const incrementScan = () => {
 
 Analyze this luxury item photo. Search for current market prices as of ${today}.
 User is in ${city.name}, ${city.country}.
-${askingPrice ? `Asking price declared by seller: ${askingPrice} (user's local currency). Compare this to market value and factor it into your verdict and delta.` : ""}
+${askingPrice ? `Asking price declared by seller: ${askingPrice} (user's local currency). Compare this to market value and factor it into your verdict and delta.` : `No asking price provided. Your verdict must be based only on whether this piece holds/gains value as an investment (rarity, trend, demand) — do NOT use "negotiate" since there is no price to negotiate against. Use "buy" if it's a sound piece to acquire at typical market price, or "avoid" only if there are real authenticity or value concerns.`}
+
 
 LEGAL CONSTRAINTS:
 - Never recommend specific platforms or sellers
