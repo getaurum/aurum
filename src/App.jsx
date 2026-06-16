@@ -1349,6 +1349,9 @@ useEffect(() => {
             <button className="cta-btn" onClick={() => document.getElementById("tools").scrollIntoView({ behavior: "smooth" })}>
               {t(lang, "try_free")}
             </button>
+            <button onClick={() => document.getElementById("example-result").scrollIntoView({ behavior: "smooth" })} style={{ background: "transparent", border: "1px solid rgba(200,155,60,0.3)", borderRadius: 12, padding: "10px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 400, color: "rgba(200,155,60,0.8)", letterSpacing: "0.05em" }}>
+              {lang === "fr" ? "Voir un exemple de résultat ↓" : lang === "ja" ? "結果例を見る ↓" : "See a sample result ↓"}
+            </button>
             
             {showOwnerInput && !isOwner && (
               <div style={{ display: "flex", gap: 8 }}>
