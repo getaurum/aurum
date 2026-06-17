@@ -23,19 +23,19 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: 'Anthropic API error' });
     }
   }
-  if (action === 'subscribe') {
-    const { email } = req.body;
+if (action === 'subscribe') {
+    const { email, tag } = req.body;
     if (!email || !email.includes('@')) return res.status(400).json({ error: 'Invalid email' });
     try {
+      const attributes = tag ? { PRICING_CHOICE: tag } : {};
       const response = await fetch('https://api.brevo.com/v3/contacts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'api-key': process.env.BREVO_API_KEY },
-        body: JSON.stringify({ email, listIds: [2], updateEnabled: true }),
+        body: JSON.stringify({ email, listIds: [2], updateEnabled: true, attributes }),
       });
-const data = await response.json();
-console.log("Brevo response:", response.status, JSON.stringify(data));
-if (response.status === 201 || response.status === 204 || data.code === 'duplicate_parameter') return res.status(200).json({ success: true });
-return res.status(200).json({ success: true, brevo: data });
+      const data = await response.json();
+      if (response.status === 201 || response.status === 204 || data.code === 'duplicate_parameter') return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true });
     } catch (error) {
       return res.status(500).json({ error: 'Brevo API error' });
     }
