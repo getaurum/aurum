@@ -788,13 +788,40 @@ Return ONLY valid JSON — no markdown, no preamble:
     </div>
   );
 
-  /* LIMIT */
+/* LIMIT */
   if (phase === "limit") return (
-    <div style={{ textAlign: "center", padding: "52px 24px", maxWidth: 440, margin: "0 auto" }}>
+    <div style={{ textAlign: "center", padding: "52px 24px", maxWidth: 480, margin: "0 auto" }}>
       <div style={{ fontSize: 44, marginBottom: 16 }}>🔒</div>
       <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontStyle: "italic", color: "rgba(255,255,255,0.8)", marginBottom: 10 }}>{t(lang, "limit_title")}</div>
-      <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, marginBottom: 10 }}>{t(lang, "limit_sub")}</p>
-<button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>50 analyses/mois — 9,99€ →</button>
+      {!pricingChoice ? (
+        <>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, marginBottom: 24 }}>{t(lang, "pricing_question")}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 10 }}>
+            {["a", "b", "c"].map(opt => (
+              <button key={opt} onClick={async () => {
+                setPricingChoice(opt);
+                if (user?.id) {
+                  const email = user.primaryEmailAddress?.emailAddress || user.emailAddresses?.[0]?.emailAddress;
+                  if (email) {
+                    fetch('/api/aurum', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'subscribe', email, tag: `pricing_${opt}` }) });
+                  }
+                }
+              }} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(200,155,60,0.25)", borderRadius: 12, padding: "16px 22px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.background = "rgba(200,155,60,0.08)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.04)"}>
+                <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 13, fontWeight: 400, color: "rgba(255,255,255,0.9)" }}>{t(lang, `pricing_${opt}`)}</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: "rgba(200,155,60,0.85)" }}>{t(lang, `pricing_${opt}_price`)}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div>
+          <div style={{ fontSize: 36, marginBottom: 12 }}>✦</div>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.9)", lineHeight: 1.6, marginBottom: 24 }}>{t(lang, "pricing_thanks")}</p>
+          <button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>{t(lang, "join_waitlist")}</button>
+        </div>
+      )}
     </div>
   );
 
