@@ -816,10 +816,9 @@ Return ONLY valid JSON — no markdown, no preamble:
           </div>
         </>
       ) : (
-        <div>
+<div>
           <div style={{ fontSize: 36, marginBottom: 12 }}>✦</div>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.9)", lineHeight: 1.6, marginBottom: 24 }}>{t(lang, "pricing_thanks")}</p>
-          <button onClick={() => document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" })} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 12, padding: "14px 32px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, letterSpacing: "0.1em", color: "#080810" }}>{t(lang, "join_waitlist")}</button>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 14, fontWeight: 300, color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>{t(lang, "pricing_thanks")}</p>
         </div>
       )}
     </div>
