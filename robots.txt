@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aurum-insight.com/sitemap.xml
