@@ -1508,9 +1508,9 @@ useEffect(() => {
                   <input className="email-in" type="email" placeholder={t(lang, "email_placeholder")} value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email.includes("@") && setJoined(true)} />
                   <button className="email-btn" onClick={async () => { if(!email.includes("@")) return; try { await fetch("/api/aurum",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"subscribe",email})}); } catch(e){} setJoined(true); }}>{t(lang, "join_btn")}</button>
                 </div>
-                <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 300, color: "rgba(255,255,255,0.88)", lineHeight: 1.5, maxWidth: 380, margin: "0 auto 16px" }}>
-                  {t(lang, "waitlist_legal")}
-                </p>
+               <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, fontWeight: 300, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, maxWidth: 580, margin: "0 auto 16px", whiteSpace: "nowrap" }}>
+  {t(lang, "waitlist_legal")}
+</p>
               </>
             ) : (
               <div style={{ textAlign: "center" }}>
