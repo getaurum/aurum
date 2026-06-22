@@ -1445,17 +1445,8 @@ useEffect(() => {
             {lang === "fr" ? "Exemple illustratif — votre résultat sera basé sur vos propres photos et données en temps réel" : lang === "ja" ? "イメージ例 — 実際の結果はあなたの写真とリアルタイムデータに基づきます" : "Illustrative example — your result will be based on your own photos and real-time data"}
           </p>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-          {/* Beta badge */}
-          <div style={{ background: "rgba(200,155,60,0.08)", border: "1px solid rgba(200,155,60,0.2)", borderRadius: 20, padding: "6px 16px", marginBottom: 8 }}>
-            <span style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 400, letterSpacing: "0.15em", color: "rgba(200,155,60,0.7)", textTransform: "uppercase" }}>
-              {lang === "fr" ? "✦ Accès anticipé" : lang === "ja" ? "✦ 早期アクセス" : "✦ Early Access"}
-            </span>
-          </div>
             <button className="cta-btn" onClick={() => document.getElementById("tools").scrollIntoView({ behavior: "smooth" })}>
               {t(lang, "try_free")}
-            </button>
-            <button onClick={() => document.getElementById("example-result").scrollIntoView({ behavior: "smooth" })} style={{ background: "transparent", border: "1px solid rgba(200,155,60,0.3)", borderRadius: 12, padding: "10px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 11, fontWeight: 400, color: "rgba(200,155,60,0.8)", letterSpacing: "0.05em" }}>
-              {lang === "fr" ? "Voir un exemple de résultat ↓" : lang === "ja" ? "結果例を見る ↓" : "See a sample result ↓"}
             </button>
             
             {showOwnerInput && !isOwner && (
