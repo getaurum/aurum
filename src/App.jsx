@@ -1388,9 +1388,11 @@ useEffect(() => {
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(13px,1.8vw,16px)", fontWeight: 300, lineHeight: 1.7, color: "rgba(255,255,255,0.92)", maxWidth: 620, margin: "0 auto 14px" }}>
             {t(lang, "hero_sub", { year }).split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
           </p>
-          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontStyle: "italic", color: "rgba(255,255,255,0.88)", maxWidth: 600, margin: "0 auto 44px", lineHeight: 1.5 }}>
-            {t(lang, "hero_legal").split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
-          </p>
+          <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontStyle: "italic", color: "rgba(255,255,255,0.88)", maxWidth: 600, margin: "0 auto 44px", lineHeight: 1.8, textAlign: "center" }}>
+  {t(lang, "hero_legal").split(" · ").map((item, i, arr) => (
+    <span key={i}>{item}{i < arr.length - 1 ? <span style={{ color: "rgba(200,155,60,0.4)" }}> · </span> : ""}</span>
+  ))}
+</p>
 <div id="example-result" style={{ position: "relative", width: "min(380px, 90vw)", margin: "0 auto 16px", borderRadius: 36, border: "3px solid rgba(200,155,60,0.35)", background: "#0e0e18", padding: 12, boxShadow: "0 25px 70px rgba(0,0,0,0.6)" }}>
             <div style={{ position: "relative", borderRadius: 26, overflow: "hidden" }}>
               <img src="https://images.unsplash.com/photo-1638023075118-9096e2a1a213?fm=jpg&q=80&w=680&auto=format&fit=crop" alt="" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center 75%", display: "block" }} />
