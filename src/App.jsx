@@ -1386,7 +1386,7 @@ useEffect(() => {
             {t(lang, "value_prop").split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
           </p>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: "clamp(13px,1.8vw,16px)", fontWeight: 300, lineHeight: 1.7, color: "rgba(255,255,255,0.92)", maxWidth: 620, margin: "0 auto 14px" }}>
-            {t(lang, "hero_sub", { year }).split("\n").map((line, i) => <span key={i}>{line}<br /></span>)}
+            {t(lang, "hero_sub", { year })}
           </p>
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontStyle: "italic", color: "rgba(255,255,255,0.88)", maxWidth: 600, margin: "0 auto 44px", lineHeight: 1.8, textAlign: "center" }}>
   {t(lang, "hero_legal").split(" · ").map((item, i, arr) => (
