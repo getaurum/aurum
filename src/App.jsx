@@ -670,7 +670,6 @@ LEGAL CONSTRAINTS:
 - Frame as market observations only
 - Be clear this is indicative only
 
-IMPORTANT: Do NOT invent specific prices. If you cannot confirm the market range from visual clues alone, leave estimatedMarketRange as "See web search results" and estimatedMarketEUR as 0. Focus only on what you can SEE in the photo: brand, model, condition, material, colour, hardware.
 
 Return ONLY valid JSON — no markdown. All text values must be in ${langName}:
 {
