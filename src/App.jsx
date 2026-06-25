@@ -1395,7 +1395,7 @@ useEffect(() => {
 </p>
 <div id="example-result" style={{ position: "relative", width: "min(380px, 90vw)", margin: "0 auto 16px", borderRadius: 36, border: "3px solid rgba(200,155,60,0.35)", background: "#0e0e18", padding: 12, boxShadow: "0 25px 70px rgba(0,0,0,0.6)" }}>
             <div style={{ position: "relative", borderRadius: 26, overflow: "hidden" }}>
-              <img src="https://images.unsplash.com/photo-1638023075118-9096e2a1a213?fm=jpg&q=80&w=760&auto=format&fit=crop" alt="" style={{ width: "100%", height: 260, objectFit: "cover", objectPosition: "center 85%", display: "block" }} />
+              <img src="https://images.unsplash.com/photo-1638023075118-9096e2a1a213?fm=jpg&q=80&w=760&auto=format&fit=crop" alt="" style={{ width: "100%", height: 340, objectFit: "cover", objectPosition: "center 95%", display: "block" }} />
               <div style={{ background: "#0c0c16", padding: "20px 22px", textAlign: "left" }}>
                 <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, letterSpacing: "0.25em", color: "rgba(200,155,60,0.6)", textTransform: "uppercase", marginBottom: 5 }}>Christian Dior · Bag</div>
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: "rgba(255,255,255,0.9)", marginBottom: 14 }}>Lady Dior (modèle classique)</div>
