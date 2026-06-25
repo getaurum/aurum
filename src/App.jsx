@@ -891,9 +891,15 @@ if (phase === "error") return (
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: sc?.color }}>{result.delta}</div>
               </div>
             </div>
-            {result.priceVerdict && askingPrice && (
-  <div style={{ background: "rgba(200,155,60,0.08)", border: "1px solid rgba(200,155,60,0.25)", borderRadius: 10, padding: "10px 16px", marginBottom: 10, display: "flex", gap: 8, alignItems: "center" }}>
+            {result.delta && askingPrice && (
+  <div style={{ background: result.delta.includes("below") || result.delta.includes("sous") ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)", border: `1px solid ${result.delta.includes("below") || result.delta.includes("sous") ? "rgba(34,197,94,0.25)" : "rgba(239,68,68,0.25)"}`, borderRadius: 10, padding: "10px 16px", marginBottom: 10, display: "flex", gap: 8, alignItems: "center" }}>
     <span>💰</span>
+    <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 500, color: result.delta.includes("below") || result.delta.includes("sous") ? "#22c55e" : "#ef4444", margin: 0 }}>{result.delta}</p>
+  </div>
+)}
+{result.priceVerdict && askingPrice && (
+  <div style={{ background: "rgba(200,155,60,0.08)", border: "1px solid rgba(200,155,60,0.25)", borderRadius: 10, padding: "10px 16px", marginBottom: 10, display: "flex", gap: 8, alignItems: "center" }}>
+    <span>📊</span>
     <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 12, fontWeight: 400, color: "rgba(200,155,60,0.9)", margin: 0 }}>{result.priceVerdict}</p>
   </div>
 )}
