@@ -986,6 +986,9 @@ if (phase === "error") return (
           <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>⚠ {result.disclaimer}</p>
         </div>
         {!isOwner && <p style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 11, color: "rgba(200,155,60,0.7)", textAlign: "center", marginBottom: 14 }}>{t(lang, "analyses_left_cta", { n: MAX_SCANS - scansUsed })}</p>}
+        <button onClick={() => {}} style={{ background: "linear-gradient(135deg,#c8923a,#f2cc72)", border: "none", borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, fontWeight: 500, color: "#080810", marginRight: 10 }}>
+  {lang === "fr" ? "📤 Partager ce résultat" : lang === "ja" ? "📤 結果をシェア" : "📤 Share this result"}
+</button>
         <button onClick={() => { setPhase("idle"); setResult(null); setPreview(null); setCondition(null); setAskingPrice(""); }} style={{ background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "12px 24px", cursor: "pointer", fontFamily: "'DM Sans',sans-serif", fontSize: 10, color: "rgba(255,255,255,0.88)" }}>
           {t(lang, isBuy ? "scan_another" : "analyse_another")}
         </button>
