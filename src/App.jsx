@@ -1001,7 +1001,7 @@ if (phase === "error") return (
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
               <div>
                 <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.2em", color: "rgba(200,155,60,0.72)", textTransform: "uppercase", marginBottom: 4 }}>{t(lang, "market_range")}</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 24, color: "rgba(255,255,255,0.88)" }}>{result.estimatedMarketRange}</div>
+                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 24, color: "rgba(255,255,255,0.88)" }}>{result.estimatedMarketRange === "See web search results" ? "—" : result.estimatedMarketRange}</div>
                 <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.88)", marginTop: 2, fontStyle: "italic" }}>{result.priceSource}</div>
               </div>
               {!askingPrice && <div style={{ textAlign: "right" }}>
