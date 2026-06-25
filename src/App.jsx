@@ -886,10 +886,10 @@ if (phase === "error") return (
                 <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 24, color: "rgba(255,255,255,0.88)" }}>{result.estimatedMarketRange}</div>
                 <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 9, color: "rgba(255,255,255,0.88)", marginTop: 2, fontStyle: "italic" }}>{result.priceSource}</div>
               </div>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.2em", color: "rgba(255,255,255,0.88)", textTransform: "uppercase", marginBottom: 3 }}>{t(lang, "price_context")}</div>
-                <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: sc?.color }}>{result.delta}</div>
-              </div>
+              {!askingPrice && <div style={{ textAlign: "right" }}>
+  <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 8, letterSpacing: "0.2em", color: "rgba(255,255,255,0.88)", textTransform: "uppercase", marginBottom: 3 }}>{t(lang, "price_context")}</div>
+  <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 18, color: sc?.color }}>{result.delta}</div>
+</div>}
             </div>
             {result.delta && askingPrice && (
   <div style={{ background: result.delta.includes("below") || result.delta.includes("sous") ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)", border: `1px solid ${result.delta.includes("below") || result.delta.includes("sous") ? "rgba(34,197,94,0.25)" : "rgba(239,68,68,0.25)"}`, borderRadius: 10, padding: "10px 16px", marginBottom: 10, display: "flex", gap: 8, alignItems: "center" }}>
