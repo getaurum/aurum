@@ -524,6 +524,121 @@ const incrementScan = () => {
   setScansUsed(n);
 };
 
+  const shareResult = async () => {
+  if (!result) return;
+  setSharing(true);
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext("2d");
+
+    // Background
+    ctx.fillStyle = "#0c0c16";
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    // Gold gradient border
+    const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+    grad.addColorStop(0, "#c8923a");
+    grad.addColorStop(0.5, "#f2cc72");
+    grad.addColorStop(1, "#c8923a");
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 3;
+    ctx.strokeRect(40, 40, 1000, 1000);
+
+    // Aurum logo
+    ctx.font = "italic 52px Georgia, serif";
+    ctx.fillStyle = "#f2cc72";
+    ctx.textAlign = "center";
+    ctx.fillText("Aurum", 540, 130);
+
+    // Divider
+    ctx.strokeStyle = "rgba(200,155,60,0.4)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(340, 155);
+    ctx.lineTo(740, 155);
+    ctx.stroke();
+
+    // House & piece
+    ctx.font = "11px Arial, sans-serif";
+    ctx.fillStyle = "rgba(200,155,60,0.7)";
+    ctx.fillText(`${result.house?.toUpperCase()} · ${result.category?.toUpperCase()}`, 540, 210);
+
+    ctx.font = "italic 36px Georgia, serif";
+    ctx.fillStyle = "rgba(255,255,255,0.92)";
+    ctx.fillText(result.piece || "", 540, 265);
+
+    // Verdict
+    const sc = result.mode === "buy" ? (BUY_SCORE[result.verdict] || BUY_SCORE.unknown) : (SELL_SCORE[result.sellVerdict] || SELL_SCORE.unknown);
+    ctx.font = "bold 54px Arial, sans-serif";
+    ctx.fillStyle = sc.color;
+    ctx.fillText(`${sc.emoji} ${sc.label[lang] || sc.label.en}`, 540, 370);
+
+    // Verdict statement
+    ctx.font = "300 22px Arial, sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    const stmt = result.verdictStatement || result.sellStatement || "";
+    const words = stmt.split(" ");
+    let line = "", y = 440;
+    for (const word of words) {
+      const test = line + word + " ";
+      if (ctx.measureText(test).width > 800 && line) {
+        ctx.fillText(line.trim(), 540, y);
+        line = word + " ";
+        y += 34;
+      } else { line = test; }
+    }
+    if (line) ctx.fillText(line.trim(), 540, y);
+
+    // Market range
+    y += 70;
+    ctx.font = "9px Arial, sans-serif";
+    ctx.fillStyle = "rgba(200,155,60,0.6)";
+    ctx.letterSpacing = "0.2em";
+    ctx.fillText(lang === "fr" ? "VALEUR DE MARCHÉ" : "MARKET RANGE", 540, y);
+    y += 44;
+    ctx.font = "italic 40px Georgia, serif";
+    ctx.fillStyle = "rgba(255,255,255,0.88)";
+    ctx.fillText(result.estimatedMarketRange || result.currentMarketRange || "", 540, y);
+
+    // Trend
+    if (result.trend) {
+      const trendConf = TREND[result.trend] || TREND.stable;
+      y += 50;
+      ctx.font = "16px Arial, sans-serif";
+      ctx.fillStyle = trendConf.color;
+      ctx.fillText(`${trendConf.arrow} ${trendConf.label[lang] || trendConf.label.en}`, 540, y);
+    }
+
+    // Footer
+    ctx.font = "13px Arial, sans-serif";
+    ctx.fillStyle = "rgba(200,155,60,0.5)";
+    ctx.fillText("aurum-insight.com", 540, 980);
+
+    // Share
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], "aurum-result.png", { type: "image/png" });
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: "Aurum — Analyse de marché luxe",
+          text: `${result.piece} · ${sc.label[lang] || sc.label.en}`,
+          files: [file]
+        });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "aurum-result.png";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+      setSharing(false);
+    }, "image/png");
+  } catch (err) {
+    setSharing(false);
+  }
+};
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
 
   const processFile = async (file) => {
