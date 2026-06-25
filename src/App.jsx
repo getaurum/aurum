@@ -496,6 +496,7 @@ const [preview, setPreview] = useState(null);
 const [step, setStep] = useState("");
 const [errorMsg, setErrorMsg] = useState("");
 const [pricingChoice, setPricingChoice] = useState(null);
+const [sharing, setSharing] = useState(false);
 const [scansUsed, setScansUsed] = useState(() => {
   if (user?.id) {
     return parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
