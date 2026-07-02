@@ -4,8 +4,8 @@
   "framework": "vite",
   "functions": {
     "api/aurum.js": {
-      "maxDuration": 60
-    }
+  "maxDuration": 300
+}
   },
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
