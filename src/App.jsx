@@ -430,7 +430,7 @@ async function callClaudeTextJSON(prompt) {
   const body = {
     model: "claude-haiku-4-5-20251001",
 max_tokens: 4000,
-tools: [{ type: "web_search_20250305", name: "web_search" }],
+tools: [{ type: "web_search_20260209", name: "web_search" }],
     messages: [{ role: "user", content: prompt }],
   };
   const res = await fetch("/api/aurum", {
