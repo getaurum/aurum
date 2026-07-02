@@ -889,7 +889,7 @@ const extractMedian = (rangeStr) => {
   if (!nums || nums.length < 2) return 0;
   return (parseInt(nums[0]) + parseInt(nums[nums.length - 1])) / 2;
 };
-const marketFromWeb = extractMedian(merged.estimatedMarketRange);
+const marketFromWeb = enriched.estimatedMarketEUR > 0 ? enriched.estimatedMarketEUR : extractMedian(enriched.estimatedMarketRange);
 if (askingPrice && marketFromWeb > 0) {
   const asking = parseFloat(askingPrice);
   const market = marketFromWeb;
