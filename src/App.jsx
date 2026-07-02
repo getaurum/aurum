@@ -880,7 +880,6 @@ Return ONLY valid JSON — no markdown, no preamble:
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
           const merged = { ...visual, ...enriched, mode };
-          console.log("Image range:", visual.estimatedMarketRange, "Web range:", enriched.estimatedMarketRange);
 // Recalculate delta using web search market range
 // Extract market price from web search range text
 const extractMedian = (rangeStr) => {
