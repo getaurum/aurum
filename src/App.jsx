@@ -632,10 +632,21 @@ const incrementScan = () => {
     ctx.fillStyle = "rgba(200,155,60,0.6)";
     ctx.fillText(lang === "fr" ? "VALEUR DE MARCHÉ" : "MARKET RANGE", 540, y);
     y += 50;
-    ctx.font = "italic 46px Georgia, serif";
-    ctx.fillStyle = "rgba(255,255,255,0.9)";
-    const range = result.estimatedMarketRange && result.estimatedMarketRange !== "See web search results" ? result.estimatedMarketRange : (result.currentMarketRange || "—");
-    ctx.fillText(range, 540, y);
+    ctx.font = "italic 36px Georgia, serif";
+ctx.fillStyle = "rgba(255,255,255,0.9)";
+const range = result.estimatedMarketRange && result.estimatedMarketRange !== "See web search results" ? result.estimatedMarketRange : (result.currentMarketRange || "—");
+const rangeWords = range.split(" ");
+let rangeLine = "", ry = y;
+for (const word of rangeWords) {
+  const test = rangeLine + word + " ";
+  if (ctx.measureText(test).width > 900 && rangeLine) {
+    ctx.fillText(rangeLine.trim(), 540, ry);
+    rangeLine = word + " ";
+    ry += 44;
+  } else { rangeLine = test; }
+}
+if (rangeLine) ctx.fillText(rangeLine.trim(), 540, ry);
+y = ry;
 
     // Trend
     if (result.trend) {
@@ -904,7 +915,7 @@ Return ONLY valid JSON — no markdown, no preamble:
 {mode === "buy" && (
   <div style={{ marginBottom: 20 }}>
     <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "rgba(200,155,60,0.5)", textTransform: "uppercase", marginBottom: 12, textAlign: "center" }}>
-      {lang === "fr" ? "Prix demandé (optionnel)" : lang === "ja" ? "希望価格（任意）" : "Asking price (optional)"}
+      {lang === "fr" ? "💡 Prix demandé — pour un verdict précis" : lang === "ja" ? "💡 希望価格 — より正確な判定のために" : "💡 Asking price — for a precise verdict"}
     </div>
     <input
       type="number"
