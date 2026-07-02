@@ -845,7 +845,7 @@ MANDATORY SOURCES TO SEARCH:
 
 Return ONLY valid JSON — no markdown, no preamble:
 {
-  "estimatedMarketRange": "real pre-owned price range based on current listings e.g. €8,500 – €14,000",
+  "estimatedMarketRange": "MANDATORY: search Vestiaire Collective and Chrono24 RIGHT NOW for current listings of this EXACT model and give the real pre-owned price range from actual listings e.g. €8,500 – €14,000. Do NOT estimate — use real current data.",
   "estimatedMarketEUR": number,
   "trend": "rising|stable|falling",
   "trendNote": "one sentence with specific % or data point",
