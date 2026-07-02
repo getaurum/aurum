@@ -880,16 +880,20 @@ Return ONLY valid JSON — no markdown, no preamble:
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
           const merged = { ...visual, ...enriched, mode };
-// Correct verdict based on delta
-if (merged.delta && askingPrice) {
-  const deltaStr = merged.delta.toLowerCase();
-  const match = deltaStr.match(/(\d+)\s*%/);
-  if (match) {
-    const pct = parseInt(match[1]);
-    const isBelow = deltaStr.includes("below") || deltaStr.includes("sous") || deltaStr.includes("inférieur") || deltaStr.includes("en deçà");
-    if (isBelow && pct > 10) merged.verdict = "buy";
-    else if (!isBelow && pct > 10) merged.verdict = "avoid";
-    else merged.verdict = "negotiate";
+// Recalculate delta using web search market range
+if (askingPrice && merged.estimatedMarketEUR && merged.estimatedMarketEUR > 0) {
+  const asking = parseFloat(askingPrice);
+  const market = merged.estimatedMarketEUR;
+  const pct = Math.round(((market - asking) / market) * 100);
+  if (pct > 10) {
+    merged.verdict = "buy";
+    merged.delta = `${pct}% ${lang === "fr" ? "sous le prix de marché" : "below market price"}`;
+  } else if (pct < -10) {
+    merged.verdict = "avoid";
+    merged.delta = `${Math.abs(pct)}% ${lang === "fr" ? "au-dessus du prix de marché" : "above market price"}`;
+  } else {
+    merged.verdict = "negotiate";
+    merged.delta = `${Math.abs(pct)}% ${pct >= 0 ? (lang === "fr" ? "sous" : "below") : (lang === "fr" ? "au-dessus de" : "above")} ${lang === "fr" ? "la médiane de marché" : "market median"}`;
   }
 }
 setResult(merged);
