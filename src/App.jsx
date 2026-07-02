@@ -880,10 +880,19 @@ Return ONLY valid JSON — no markdown, no preamble:
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
           const merged = { ...visual, ...enriched, mode };
+          console.log("Image range:", visual.estimatedMarketRange, "Web range:", enriched.estimatedMarketRange);
 // Recalculate delta using web search market range
-if (askingPrice && merged.estimatedMarketEUR && merged.estimatedMarketEUR > 0) {
+// Extract market price from web search range text
+const extractMedian = (rangeStr) => {
+  if (!rangeStr) return 0;
+  const nums = rangeStr.replace(/[€$£,]/g, "").match(/\d+/g);
+  if (!nums || nums.length < 2) return 0;
+  return (parseInt(nums[0]) + parseInt(nums[nums.length - 1])) / 2;
+};
+const marketFromWeb = extractMedian(merged.estimatedMarketRange);
+if (askingPrice && marketFromWeb > 0) {
   const asking = parseFloat(askingPrice);
-  const market = merged.estimatedMarketEUR;
+  const market = marketFromWeb;
   const pct = Math.round(((market - asking) / market) * 100);
   if (pct > 10) {
     merged.verdict = "buy";
