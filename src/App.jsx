@@ -657,8 +657,8 @@ y = ry;
       ctx.fillText(`${trendConf.arrow} ${trendConf.label[lang] || trendConf.label.en}`, 540, y);
     }
 
-    // Delta
-    if (result.delta && askingPrice) {
+    // Delta — affiché même sans prix demandé si disponible
+    if (result.delta) {
       y += 50;
       const isBelow = result.delta.toLowerCase().includes("below") || result.delta.toLowerCase().includes("sous") || result.delta.toLowerCase().includes("inférieur");
       ctx.fillStyle = isBelow ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)";
@@ -669,6 +669,13 @@ y = ry;
       ctx.fillStyle = isBelow ? "#22c55e" : "#ef4444";
       ctx.fillText(`💰 ${result.delta}`, 540, y);
     }
+
+    // "Analysé avec Aurum" banner
+    ctx.fillStyle = "rgba(200,155,60,0.08)";
+    ctx.fillRect(0, 1200, 1080, 50);
+    ctx.font = "13px Arial, sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.5)";
+    ctx.fillText(lang === "fr" ? "✦ Analysé avec Aurum · aurum-insight.com" : "✦ Analysed with Aurum · aurum-insight.com", 540, 1232);
 
     // Aurum logo footer
     ctx.fillStyle = "rgba(200,155,60,0.15)";
