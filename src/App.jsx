@@ -888,12 +888,15 @@ if (askingPrice && merged.estimatedMarketEUR && merged.estimatedMarketEUR > 0) {
   if (pct > 10) {
     merged.verdict = "buy";
     merged.delta = `${pct}% ${lang === "fr" ? "sous le prix de marché" : "below market price"}`;
+    merged.verdictStatement = lang === "fr" ? `Excellente opportunité — ${pct}% sous le prix de marché.` : `Great opportunity — ${pct}% below market price.`;
   } else if (pct < -10) {
     merged.verdict = "avoid";
     merged.delta = `${Math.abs(pct)}% ${lang === "fr" ? "au-dessus du prix de marché" : "above market price"}`;
+    merged.verdictStatement = lang === "fr" ? `Prix élevé — ${Math.abs(pct)}% au-dessus du marché.` : `Overpriced — ${Math.abs(pct)}% above market price.`;
   } else {
     merged.verdict = "negotiate";
     merged.delta = `${Math.abs(pct)}% ${pct >= 0 ? (lang === "fr" ? "sous" : "below") : (lang === "fr" ? "au-dessus de" : "above")} ${lang === "fr" ? "la médiane de marché" : "market median"}`;
+    merged.verdictStatement = lang === "fr" ? `Prix proche du marché — une négociation est possible.` : `Price close to market — negotiation is possible.`;
   }
 }
 setResult(merged);
