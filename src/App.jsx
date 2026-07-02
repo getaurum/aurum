@@ -879,7 +879,20 @@ Return ONLY valid JSON — no markdown, no preamble:
 }`;
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
-          setResult({ ...visual, ...enriched, mode });
+          const merged = { ...visual, ...enriched, mode };
+// Correct verdict based on delta
+if (merged.delta && askingPrice) {
+  const deltaStr = merged.delta.toLowerCase();
+  const match = deltaStr.match(/(\d+)\s*%/);
+  if (match) {
+    const pct = parseInt(match[1]);
+    const isBelow = deltaStr.includes("below") || deltaStr.includes("sous") || deltaStr.includes("inférieur") || deltaStr.includes("en deçà");
+    if (isBelow && pct > 10) merged.verdict = "buy";
+    else if (!isBelow && pct > 10) merged.verdict = "avoid";
+    else merged.verdict = "negotiate";
+  }
+}
+setResult(merged);
         } else {
           setResult({ ...visual, mode });
         }
