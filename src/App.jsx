@@ -915,7 +915,7 @@ Return ONLY valid JSON — no markdown, no preamble:
 {mode === "buy" && (
   <div style={{ marginBottom: 20 }}>
     <div style={{ fontFamily: "'DM Sans',sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "rgba(200,155,60,0.5)", textTransform: "uppercase", marginBottom: 12, textAlign: "center" }}>
-      {lang === "fr" ? "💡 Prix demandé — pour un verdict précis" : lang === "ja" ? "💡 希望価格 — より正確な判定のために" : "💡 Asking price — for a precise verdict"}
+      {lang === "fr" ? "💡 Prix demandé (optionnel) — pour un verdict précis" : lang === "ja" ? "💡 希望価格（任意） — より正確な判定のために" : "💡 Asking price (optional) — for a precise verdict"}
     </div>
     <input
       type="number"
