@@ -670,13 +670,6 @@ y = ry;
       ctx.fillText(`💰 ${result.delta}`, 540, y);
     }
 
-    // "Analysé avec Aurum" banner
-    ctx.fillStyle = "rgba(200,155,60,0.08)";
-    ctx.fillRect(0, 1200, 1080, 50);
-    ctx.font = "bold 20px Arial, sans-serif";
-    ctx.fillStyle = "#f2cc72";
-    ctx.fillText(lang === "fr" ? "✦ Analysé avec Aurum · aurum-insight.com" : "✦ Analysed with Aurum · aurum-insight.com", 540, 1232);
-
     // Aurum footer
     ctx.fillStyle = "rgba(200,155,60,0.12)";
     ctx.fillRect(0, 1260, 1080, 90);
