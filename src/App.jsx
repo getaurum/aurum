@@ -677,17 +677,17 @@ y = ry;
     ctx.fillStyle = "#f2cc72";
     ctx.fillText(lang === "fr" ? "✦ Analysé avec Aurum · aurum-insight.com" : "✦ Analysed with Aurum · aurum-insight.com", 540, 1232);
 
-    // Aurum logo footer
-    ctx.fillStyle = "rgba(200,155,60,0.15)";
+    // Aurum footer
+    ctx.fillStyle = "rgba(200,155,60,0.12)";
     ctx.fillRect(0, 1260, 1080, 90);
     
-    ctx.font = "italic 38px Georgia, serif";
+    ctx.font = "italic 28px Georgia, serif";
     ctx.fillStyle = "#f2cc72";
-    ctx.fillText("Aurum", 540, 1300);
+    ctx.fillText("✦ Analysé avec Aurum", 540, 1295);
     
-    ctx.font = "12px Arial, sans-serif";
-    ctx.fillStyle = "rgba(200,155,60,0.5)";
-    ctx.fillText("aurum-insight.com", 540, 1330);
+    ctx.font = "bold 14px Arial, sans-serif";
+    ctx.fillStyle = "rgba(200,155,60,0.7)";
+    ctx.fillText("aurum-insight.com", 540, 1325);
 
     // Share
     canvas.toBlob(async (blob) => {
