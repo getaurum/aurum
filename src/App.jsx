@@ -657,8 +657,8 @@ y = ry;
       ctx.fillText(`${trendConf.arrow} ${trendConf.label[lang] || trendConf.label.en}`, 540, y);
     }
 
-    // Delta — affiché même sans prix demandé si disponible
-    if (result.delta) {
+    // Delta — affiché uniquement si prix demandé fourni
+    if (result.delta && askingPrice) {
       y += 50;
       const isBelow = result.delta.toLowerCase().includes("below") || result.delta.toLowerCase().includes("sous") || result.delta.toLowerCase().includes("inférieur");
       ctx.fillStyle = isBelow ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)";
