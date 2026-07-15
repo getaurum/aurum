@@ -4,7 +4,7 @@ import { useUser, SignIn, SignOutButton } from "@clerk/react";
 /* ─── TRANSLATIONS ─── */
 const T = {
   en: {
-    tagline: "Luxury Market Intelligence",
+    tagline: "Luxury Market Intelligence", 
     hero_title_1: "Luxury",
     hero_title_2: "at its true value.",
     value_prop: "Buy smarter. Sell smarter.\nAurum pays for itself every time.",
