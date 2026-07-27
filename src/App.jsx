@@ -433,10 +433,10 @@ max_tokens: 4000,
 tools: [{ type: "web_search_20250305", name: "web_search" }],
     messages: [{ role: "user", content: prompt }],
   };
-  const res = await fetch("/api/aurum", {
-    method: "POST", headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "claude", body }),
-  });
+  const res = await fetch("https://aurum-websearch.getaurum2026.workers.dev", {
+  method: "POST", headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ body }),
+});
   const data = await res.json();
   const textBlocks = data.content?.filter(b => b.type === "text") || [];
   const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
