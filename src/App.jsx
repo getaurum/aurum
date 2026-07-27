@@ -427,22 +427,29 @@ async function callClaudeImageJSON(base64, mimeType, prompt) {
 }
 
 async function callClaudeTextJSON(prompt) {
-  const body = {
-    model: "claude-haiku-4-5-20251001",
-max_tokens: 4000,
-tools: [{ type: "web_search_20250305", name: "web_search" }],
-    messages: [{ role: "user", content: prompt }],
-  };
-  const res = await fetch("https://aurum-websearch.getaurum2026.workers.dev", {
-  method: "POST", headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ body }),
-});
-  const data = await res.json();
-  const textBlocks = data.content?.filter(b => b.type === "text") || [];
-  const raw = textBlocks[textBlocks.length - 1]?.text || "{}";
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
-const clean = jsonMatch ? jsonMatch[0].replace(/<cite[^>]*>|<\/cite>/g, "") : "{}";
-  return JSON.parse(clean);
+  try {
+    const body = {
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 4000,
+      tools: [{ type: "web_search_20250305", name: "web_search" }],
+      messages: [{ role: "user", content: prompt }],
+    };
+    const res = await fetch("https://aurum-websearch.getaurum2026.workers.dev", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ body }),
+    });
+    const data = await res.json();
+    const allText = (data.content || [])
+      .filter(item => item.type === "text")
+      .map(item => item.text)
+      .join("");
+    const clean = allText.replace(/```json|```/g, "").replace(/<cite[^>]*>|<\/cite>/g, "").trim();
+    const jsonMatch = clean.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) return {};
+    return JSON.parse(jsonMatch[0]);
+  } catch (e) {
+    return {};
+  }
 }
 
 async function getExchangeRates() {
