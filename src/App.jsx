@@ -879,7 +879,6 @@ Return ONLY valid JSON — no markdown, no preamble:
 }`;
 
           const enriched = await callClaudeTextJSON(enrichPrompt);
-          console.log("Enriched data:", JSON.stringify(enriched));
           const merged = { ...visual, ...enriched, mode };
 // Recalculate delta using web search market range
 // Extract market price from web search range text
