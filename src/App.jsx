@@ -1217,10 +1217,17 @@ function ResearchSection({ isOwner, lang }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [analysesUsed, setAnalysesUsed] = useState(0);
   useEffect(() => {
-    if (user?.id) {
+  if (user?.primaryEmailAddress?.emailAddress) {
+    const email = user.primaryEmailAddress.emailAddress;
+    fetch('/api/aurum', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'getScans', email })
+    }).then(r => r.json()).then(d => setAnalysesUsed(d.scansUsed || 0)).catch(() => {
       setAnalysesUsed(parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0"));
-    }
-  }, [user?.id]);
+    });
+  }
+}, [user?.primaryEmailAddress?.emailAddress]);
   const MAX_ANALYSES = 3;
   const langName = { en: "English", fr: "French", ja: "Japanese" }[lang] || "English";
   const search = async () => {
