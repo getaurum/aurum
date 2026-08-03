@@ -530,11 +530,18 @@ const fileRef = useRef(null);
 const MAX_SCANS = isOwner ? maxScansOverride : 3;
 const incrementScan = () => {
   const n = scansUsed + 1;
-  console.log("Saving scan for user:", user?.id, "n:", n);
+  setScansUsed(n);
   if (user?.id) {
     localStorage.setItem(`aurum_scans_${user.id}`, n);
   }
-  setScansUsed(n);
+  const email = user?.primaryEmailAddress?.emailAddress;
+  if (email) {
+    fetch('/api/aurum', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'incrementScans', email, scansUsed: n })
+    });
+  }
 };
 
 const shareResult = async () => {
