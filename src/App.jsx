@@ -531,7 +531,7 @@ const incrementScan = () => {
   setScansUsed(n);
 };
 
-  const shareResult = async () => {
+const shareResult = async () => {
   if (!result) return;
   setSharing(true);
   try {
@@ -544,29 +544,25 @@ const incrementScan = () => {
     ctx.fillStyle = "#0c0c16";
     ctx.fillRect(0, 0, 1080, 1350);
 
-    // Load and draw preview photo
+    // Photo du sac
     if (preview) {
       await new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
           ctx.save();
           ctx.beginPath();
-          ctx.rect(0, 0, 1080, 480);
+          ctx.rect(0, 0, 1080, 500);
           ctx.clip();
-          // Cover fit
-          const scale = Math.max(1080 / img.width, 480 / img.height);
+          const scale = Math.max(1080 / img.width, 500 / img.height);
           const w = img.width * scale;
           const h = img.height * scale;
-          const x = (1080 - w) / 2;
-          const y = (480 - h) / 2;
-          ctx.drawImage(img, x, y, w, h);
+          ctx.drawImage(img, (1080 - w) / 2, (500 - h) / 2, w, h);
           ctx.restore();
-          // Dark overlay
-          const overlay = ctx.createLinearGradient(0, 200, 0, 480);
+          const overlay = ctx.createLinearGradient(0, 250, 0, 500);
           overlay.addColorStop(0, "rgba(12,12,22,0)");
-          overlay.addColorStop(1, "rgba(12,12,22,0.95)");
+          overlay.addColorStop(1, "rgba(12,12,22,0.97)");
           ctx.fillStyle = overlay;
-          ctx.fillRect(0, 0, 1080, 480);
+          ctx.fillRect(0, 0, 1080, 500);
           resolve();
         };
         img.src = preview;
@@ -582,109 +578,79 @@ const incrementScan = () => {
     ctx.lineWidth = 4;
     ctx.strokeRect(20, 20, 1040, 1310);
 
-    // House & piece (over photo)
+    // Marque · Modèle
+    ctx.textAlign = "center";
     ctx.font = "500 18px Arial, sans-serif";
     ctx.fillStyle = "rgba(200,155,60,0.85)";
-    ctx.textAlign = "center";
-    ctx.fillText(`${(result.house || "").toUpperCase()} · ${(result.category || "").toUpperCase()}`, 540, 400);
+    ctx.fillText(`${(result.house || "").toUpperCase()} · ${(result.category || "").toUpperCase()}`, 540, 440);
 
     ctx.font = "italic 42px Georgia, serif";
     ctx.fillStyle = "rgba(255,255,255,0.95)";
-    ctx.fillText(result.piece || "", 540, 460);
-
-    // Verdict box
-    const sc = result.mode === "buy" ? (BUY_SCORE[result.verdict] || BUY_SCORE.unknown) : (SELL_SCORE[result.sellVerdict] || SELL_SCORE.unknown);
-    ctx.fillStyle = sc.color + "22";
-    ctx.beginPath();
-    ctx.roundRect(60, 510, 960, 130, 20);
-    ctx.fill();
-    ctx.strokeStyle = sc.color + "55";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.roundRect(60, 510, 960, 130, 20);
-    ctx.stroke();
-
-    ctx.font = "bold 58px Arial, sans-serif";
-    ctx.fillStyle = sc.color;
-    ctx.textAlign = "center";
-    ctx.fillText(`${sc.emoji} ${sc.label[lang] || sc.label.en}`, 540, 590);
-
-    // Verdict statement
-    ctx.font = "300 24px Arial, sans-serif";
-    ctx.fillStyle = "rgba(255,255,255,0.8)";
-    const stmt = result.verdictStatement || result.sellStatement || "";
-    const words = stmt.split(" ");
-    let line = "", y = 690;
-    for (const word of words) {
-      const test = line + word + " ";
-      if (ctx.measureText(test).width > 900 && line) {
-        ctx.fillText(line.trim(), 540, y);
-        line = word + " ";
-        y += 36;
-      } else { line = test; }
-    }
-    if (line) ctx.fillText(line.trim(), 540, y);
+    ctx.fillText(result.piece || "", 540, 500);
 
     // Divider
     ctx.strokeStyle = "rgba(200,155,60,0.3)";
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(100, y + 40);
-    ctx.lineTo(980, y + 40);
+    ctx.moveTo(200, 530);
+    ctx.lineTo(880, 530);
     ctx.stroke();
-    y += 80;
 
-    // Market range
-    ctx.font = "11px Arial, sans-serif";
-    ctx.fillStyle = "rgba(200,155,60,0.6)";
-    ctx.fillText(lang === "fr" ? "VALEUR DE MARCHÉ" : "MARKET RANGE", 540, y);
-    y += 50;
-    ctx.font = "italic 36px Georgia, serif";
-ctx.fillStyle = "rgba(255,255,255,0.9)";
-const range = result.estimatedMarketRange && result.estimatedMarketRange !== "See web search results" ? result.estimatedMarketRange : (result.currentMarketRange || "—");
-const rangeWords = range.split(" ");
-let rangeLine = "", ry = y;
-for (const word of rangeWords) {
-  const test = rangeLine + word + " ";
-  if (ctx.measureText(test).width > 900 && rangeLine) {
-    ctx.fillText(rangeLine.trim(), 540, ry);
-    rangeLine = word + " ";
-    ry += 44;
-  } else { rangeLine = test; }
-}
-if (rangeLine) ctx.fillText(rangeLine.trim(), 540, ry);
-y = ry;
-
-    // Trend
-    if (result.trend) {
-      const trendConf = TREND[result.trend] || TREND.stable;
-      y += 50;
-      ctx.font = "18px Arial, sans-serif";
-      ctx.fillStyle = trendConf.color;
-      ctx.fillText(`${trendConf.arrow} ${trendConf.label[lang] || trendConf.label.en}`, 540, y);
+    // Prix demandé
+    if (askingPrice) {
+      ctx.font = "13px Arial, sans-serif";
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      ctx.fillText(lang === "fr" ? "PRIX DEMANDÉ" : "ASKING PRICE", 540, 590);
+      ctx.font = "italic 36px Georgia, serif";
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.fillText(`${askingPrice} ${rates ? Object.keys(rates)[0] || "€" : "€"}`, 540, 640);
     }
 
-    // Delta — affiché uniquement si prix demandé fourni
+    // Fourchette de marché
+    const range = result.estimatedMarketRange && result.estimatedMarketRange !== "See web search results" 
+      ? result.estimatedMarketRange 
+      : (result.currentMarketRange || "—");
+    ctx.font = "13px Arial, sans-serif";
+    ctx.fillStyle = "rgba(200,155,60,0.6)";
+    ctx.fillText(lang === "fr" ? "VALEUR DE MARCHÉ" : "MARKET RANGE", 540, askingPrice ? 710 : 610);
+    ctx.font = "italic 36px Georgia, serif";
+    ctx.fillStyle = "rgba(255,255,255,0.9)";
+    ctx.fillText(range, 540, askingPrice ? 760 : 660);
+
+    // Delta
     if (result.delta && askingPrice) {
-      y += 50;
       const isBelow = result.delta.toLowerCase().includes("below") || result.delta.toLowerCase().includes("sous") || result.delta.toLowerCase().includes("inférieur");
       ctx.fillStyle = isBelow ? "rgba(34,197,94,0.15)" : "rgba(239,68,68,0.15)";
       ctx.beginPath();
-      ctx.roundRect(200, y - 30, 680, 50, 25);
+      ctx.roundRect(200, 790, 680, 55, 28);
       ctx.fill();
-      ctx.font = "500 16px Arial, sans-serif";
+      ctx.font = "bold 18px Arial, sans-serif";
       ctx.fillStyle = isBelow ? "#22c55e" : "#ef4444";
-      ctx.fillText(`💰 ${result.delta}`, 540, y);
+      ctx.fillText(`💰 ${result.delta}`, 540, 824);
     }
 
-    // Aurum footer
+    // Verdict
+    const sc = result.mode === "buy" ? (BUY_SCORE[result.verdict] || BUY_SCORE.unknown) : (SELL_SCORE[result.sellVerdict] || SELL_SCORE.unknown);
+    const verdictY = askingPrice ? 950 : 800;
+    ctx.fillStyle = sc.color + "22";
+    ctx.beginPath();
+    ctx.roundRect(60, verdictY - 60, 960, 110, 20);
+    ctx.fill();
+    ctx.strokeStyle = sc.color + "55";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(60, verdictY - 60, 960, 110, 20);
+    ctx.stroke();
+    ctx.font = "bold 62px Arial, sans-serif";
+    ctx.fillStyle = sc.color;
+    ctx.fillText(`${sc.emoji} ${sc.label[lang] || sc.label.en}`, 540, verdictY);
+
+    // Footer
     ctx.fillStyle = "rgba(200,155,60,0.12)";
     ctx.fillRect(0, 1260, 1080, 90);
-    
     ctx.font = "italic 28px Georgia, serif";
     ctx.fillStyle = "#f2cc72";
     ctx.fillText("✦ Analysé avec Aurum", 540, 1295);
-    
     ctx.font = "bold 14px Arial, sans-serif";
     ctx.fillStyle = "rgba(200,155,60,0.7)";
     ctx.fillText("aurum-insight.com", 540, 1325);
