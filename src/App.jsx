@@ -596,7 +596,7 @@ const shareResult = async () => {
     ctx.lineTo(880, 530);
     ctx.stroke();
 
-    // Prix demandé
+   // Prix demandé
     if (askingPrice) {
       ctx.font = "13px Arial, sans-serif";
       ctx.fillStyle = "rgba(255,255,255,0.5)";
@@ -613,9 +613,19 @@ const shareResult = async () => {
     ctx.font = "13px Arial, sans-serif";
     ctx.fillStyle = "rgba(200,155,60,0.6)";
     ctx.fillText(lang === "fr" ? "VALEUR DE MARCHÉ" : "MARKET RANGE", 540, askingPrice ? 710 : 610);
-    ctx.font = "italic 36px Georgia, serif";
+    ctx.font = "italic 32px Georgia, serif";
     ctx.fillStyle = "rgba(255,255,255,0.9)";
-    ctx.fillText(range, 540, askingPrice ? 760 : 660);
+    if (ctx.measureText(range).width > 900) {
+      const parts = range.split("–").map(s => s.trim());
+      if (parts.length === 2) {
+        ctx.fillText(parts[0] + " –", 540, askingPrice ? 750 : 650);
+        ctx.fillText(parts[1], 540, askingPrice ? 795 : 695);
+      } else {
+        ctx.fillText(range, 540, askingPrice ? 760 : 660);
+      }
+    } else {
+      ctx.fillText(range, 540, askingPrice ? 760 : 660);
+    }
 
     // Delta
     if (result.delta && askingPrice) {
