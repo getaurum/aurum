@@ -1282,11 +1282,19 @@ Return ONLY valid JSON — no markdown, no preamble. All text in ${langName}:
   "disclaimer": "short disclaimer in ${langName}"
 }`;
       const data = await callClaudeTextJSON(prompt);
-      if (user?.id) {
-        const n = analysesUsed + 1;
-        localStorage.setItem(`aurum_scans_${user.id}`, n);
-        setAnalysesUsed(n);
-      }
+      const n = analysesUsed + 1;
+setAnalysesUsed(n);
+if (user?.id) {
+  localStorage.setItem(`aurum_scans_${user.id}`, n);
+}
+const email = user?.primaryEmailAddress?.emailAddress;
+if (email) {
+  fetch('/api/aurum', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'incrementScans', email, scansUsed: n })
+  });
+}
       setResult(data);
       setPhase("result");
     } catch (err) { 
