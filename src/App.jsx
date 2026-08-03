@@ -719,6 +719,10 @@ y = ry;
     if (!file?.type.startsWith("image/")) return;
     if (scansUsed >= MAX_SCANS && !isOwner) { setPhase("limit"); return; }
     if (mode === "sell" && !condition) return;
+    if (mode === "buy" && !askingPrice.trim()) { 
+      alert(lang === "fr" ? "Veuillez entrer le prix demandé pour obtenir un verdict précis." : lang === "ja" ? "正確な判定のために希望価格を入力してください。" : "Please enter the asking price for a precise verdict."); 
+      return; 
+    }
     setPhase("scanning"); setResult(null);
 
     const reader = new FileReader();
