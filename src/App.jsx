@@ -511,12 +511,18 @@ const [scansUsed, setScansUsed] = useState(() => {
   return 0;
 });
 useEffect(() => {
-  if (user?.id) {
-    const saved = parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
-    console.log("Loading scans for user:", user.id, "scans:", saved);
-    setScansUsed(saved);
+  if (user?.primaryEmailAddress?.emailAddress) {
+    const email = user.primaryEmailAddress.emailAddress;
+    fetch('/api/aurum', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'getScans', email })
+    }).then(r => r.json()).then(d => setScansUsed(d.scansUsed || 0)).catch(() => {
+      const saved = parseInt(localStorage.getItem(`aurum_scans_${user.id}`) || "0");
+      setScansUsed(saved);
+    });
   }
-}, [user?.id]);
+}, [user?.primaryEmailAddress?.emailAddress]);
 const fileRef = useRef(null);
   const cameraRef = useRef(null);
   if (!isLoaded) return <div style={{ minHeight: "200px", background: "#0c0c16" }} />;
