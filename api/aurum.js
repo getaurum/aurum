@@ -54,5 +54,33 @@ return res.status(200).json({ success: true });
       return res.status(500).json({ error: error.message });
     }
   }
+  if (action === 'getScans') {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Invalid email' });
+    try {
+      const response = await fetch(`https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`, {
+        headers: { 'api-key': process.env.BREVO_API_KEY }
+      });
+      const data = await response.json();
+      return res.status(200).json({ scansUsed: data.attributes?.SCANS_USED || 0 });
+    } catch (error) {
+      return res.status(200).json({ scansUsed: 0 });
+    }
+  }
+
+  if (action === 'incrementScans') {
+    const { email, scansUsed } = req.body;
+    if (!email) return res.status(400).json({ error: 'Invalid email' });
+    try {
+      await fetch('https://api.brevo.com/v3/contacts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'api-key': process.env.BREVO_API_KEY },
+        body: JSON.stringify({ email, attributes: { SCANS_USED: scansUsed }, updateEnabled: true }),
+      });
+      return res.status(200).json({ success: true });
+    } catch (error) {
+      return res.status(500).json({ error: 'Brevo API error' });
+    }
+  }
   return res.status(400).json({ error: 'Unknown action' });
 }
